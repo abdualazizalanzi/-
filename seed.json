@@ -1,0 +1,549 @@
+{
+ "depts": {
+  "d-cit-alwajh": {
+   "college": "الكلية التقنية في الوجه",
+   "createdAt": "2026-10-12T10:45:44.636Z",
+   "name": "قسم الحاسب وتقنية المعلومات"
+  }
+ },
+ "rooms": {
+  "d-cit-alwajh-r-warehouse": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "المستودع",
+   "type": "مستودع"
+  },
+  "d-cit-alwajh-r-data": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة البيانات",
+   "type": "غرفة بيانات"
+  },
+  "d-cit-alwajh-r-20002": {
+   "boards": 0,
+   "capacity": 0,
+   "chairs": 1,
+   "computers": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "20002",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 0,
+   "type": "معمل"
+  },
+  "d-cit-alwajh-r-20003": {
+   "boards": 1,
+   "capacity": 0,
+   "chairs": 0,
+   "computers": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "20003",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 0,
+   "type": "معمل"
+  },
+  "d-cit-alwajh-r-servers": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة السيرفرات",
+   "type": "غرفة سيرفرات"
+  },
+  "d-cit-alwajh-r-10001": {
+   "boards": 1,
+   "capacity": 0,
+   "chairs": 0,
+   "computers": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "10001",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 0,
+   "type": "معمل"
+  },
+  "d-cit-alwajh-r-trainers-2": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة المدربين 2",
+   "type": "غرفة مدربين"
+  },
+  "d-cit-alwajh-r-20001": {
+   "boards": 1,
+   "capacity": 0,
+   "chairs": 20,
+   "computers": 21,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "20001",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 20,
+   "type": "معمل"
+  },
+  "d-cit-alwajh-r-10002": {
+   "boards": 1,
+   "capacity": 0,
+   "chairs": 16,
+   "computers": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "10002",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 8,
+   "type": "ورشة"
+  },
+  "d-cit-alwajh-r-trainers-3": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة المدربين 3",
+   "type": "غرفة مدربين"
+  },
+  "d-cit-alwajh-r-20004": {
+   "boards": 1,
+   "capacity": 0,
+   "chairs": 0,
+   "computers": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "20004",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 0,
+   "type": "قاعة"
+  },
+  "d-cit-alwajh-r-10003": {
+   "boards": 1,
+   "capacity": 0,
+   "chairs": 0,
+   "computers": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "10003",
+   "projectors": 0,
+   "screens": 0,
+   "tables": 0,
+   "type": "معمل"
+  },
+  "d-cit-alwajh-r-trainers-1": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة المدربين 1",
+   "type": "غرفة مدربين"
+  },
+  "d-cit-alwajh-r-trainers-5": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة المدربين 5",
+   "type": "غرفة مدربين"
+  },
+  "d-cit-alwajh-r-trainers-4": {
+   "capacity": 0,
+   "dept": "d-cit-alwajh",
+   "name": "",
+   "notes": "",
+   "num": "غرفة المدربين 4",
+   "type": "غرفة مدربين"
+  }
+ },
+ "items": {
+  "d-cit-alwajh-i-52239": {
+   "alloc": {
+    "d-cit-alwajh-r-20001": 20
+   },
+   "code": "52239",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 20001",
+   "name": "كرسي معمل دوار المقعد والظهر من البلاستيك المقوى، متحرك بخمس عجلات",
+   "qty": 20,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-23189": {
+   "code": "23189",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب رئيس القسم",
+   "name": "دباسة كهربائية",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-48556": {
+   "alloc": {
+    "d-cit-alwajh-r-10002": 1
+   },
+   "code": "48556",
+   "dept": "d-cit-alwajh",
+   "loc": "ورشة 10002",
+   "name": "طاولة مدرب في القاعة التدريبية",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-53993": {
+   "code": "53993",
+   "dept": "d-cit-alwajh",
+   "loc": "جميع المعامل",
+   "name": "جهاز عرض بالحاسب الآلي تفاعلي مدمج مع الجهاز، مع حامل جداري EB-685Wi",
+   "qty": 7,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-56069": {
+   "code": "56069",
+   "dept": "d-cit-alwajh",
+   "loc": "المستودع",
+   "name": "سماعات لاسلكية سقفية دائرية",
+   "qty": 10,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-22093": {
+   "alloc": {
+    "d-cit-alwajh-r-20002": 1
+   },
+   "code": "22093",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 20002",
+   "name": "كرسي دوار متحرك على 5 عجلات ظهر قصير",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-46807": {
+   "code": "46807",
+   "dept": "d-cit-alwajh",
+   "loc": "",
+   "name": "طاولة حاسب آلي",
+   "qty": 100,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-52988": {
+   "code": "52988",
+   "dept": "d-cit-alwajh",
+   "loc": "1- مكتب رئيس القسم 6 مكاتب المدربين",
+   "name": "كرسي مدرب ظهر طويل على خمس عجلات، قابل للتعديل، مسند اليد والظهر من البلاستيك",
+   "qty": 7,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-55988": {
+   "alloc": {
+    "d-cit-alwajh-r-20001": 21
+   },
+   "code": "55988",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 20001",
+   "name": "جهاز كمبيوتر HP Elite SFF 800 G9 i7",
+   "qty": 21,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-49891": {
+   "alloc": {
+    "d-cit-alwajh-r-10002": 1
+   },
+   "code": "49891",
+   "dept": "d-cit-alwajh",
+   "loc": "ورشة 10002",
+   "name": "سبورة بيضاء مطفية اللمعان، ثابتة، سطح أملس من الصاج غير قابل للصدأ، مطلي بطبقة بورسلان أبيض قابل للخدش، مع عوارض جانبية",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-55312": {
+   "code": "55312",
+   "dept": "d-cit-alwajh",
+   "loc": "",
+   "name": "شاشة كمبيوتر HP مقاس 24 بوصة",
+   "qty": 76,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-22117": {
+   "code": "22117",
+   "dept": "d-cit-alwajh",
+   "loc": "",
+   "name": "كرسي متدرب",
+   "qty": 70,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-53995": {
+   "code": "53995",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب السكرتير",
+   "name": "آلة تصوير توشيبا موديل e-STUDIO 3018",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-55987": {
+   "code": "55987",
+   "dept": "d-cit-alwajh",
+   "loc": "2 مكتب رئيس القسم 3 مكاتب المدربين",
+   "name": "كرسي زائر ثابت بأذرع، منجد بإسفنج وقماش",
+   "qty": 5,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-47296": {
+   "alloc": {
+    "d-cit-alwajh-r-10001": 1,
+    "d-cit-alwajh-r-10003": 1,
+    "d-cit-alwajh-r-20001": 1,
+    "d-cit-alwajh-r-20002": 1,
+    "d-cit-alwajh-r-20003": 1
+   },
+   "code": "47296",
+   "dept": "d-cit-alwajh",
+   "loc": "جميع المعامل",
+   "name": "طاولة مدرس مع كرسي دوار",
+   "qty": 5,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-46288": {
+   "alloc": {
+    "d-cit-alwajh-r-10002": 16
+   },
+   "code": "46288",
+   "dept": "d-cit-alwajh",
+   "loc": "ورشة 10002",
+   "name": "كرسي معمل دوار المقعد والظهر من البلاستيك المقوى، ظهر قصير",
+   "qty": 16,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-32743": {
+   "code": "32743",
+   "dept": "d-cit-alwajh",
+   "loc": "المستودع",
+   "name": "جهاز راسم إشارة",
+   "qty": 4,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-3834": {
+   "code": "3834",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب رئيس القسم",
+   "name": "ثلاجة كهربائية 3 قدم باب واحد 220 فولت",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-40255": {
+   "code": "40255",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب رئيس القسم - وكالة شؤون المتدربين",
+   "name": "جهاز تحكم عن بعد للعرض المرئي (ريموت)",
+   "qty": 2,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-54645": {
+   "alloc": {
+    "d-cit-alwajh-r-20001": 20
+   },
+   "code": "54645",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 20001",
+   "name": "طاولة حاسب آلي مقاس 80 × 60 × 74 سم، هيكل معدني من نوفا",
+   "qty": 20,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-41168": {
+   "code": "41168",
+   "dept": "d-cit-alwajh",
+   "loc": "المستودع",
+   "name": "مصدر قدرة",
+   "qty": 2,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-54046": {
+   "code": "54046",
+   "dept": "d-cit-alwajh",
+   "loc": "البهو",
+   "name": "كراسي انتظار ثابت قماش 3 مقاعد مع طاولة شاي",
+   "qty": 4,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-51604": {
+   "code": "51604",
+   "dept": "d-cit-alwajh",
+   "loc": "",
+   "name": "كرسي متدرب للحاسب",
+   "qty": 100,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-53625": {
+   "code": "53625",
+   "dept": "d-cit-alwajh",
+   "loc": "مكاتب المدربين",
+   "name": "مكتب مدرب مستطيل الشكل ووحدة أدراج ثلاثية ودولاب درفتين بأبواب زجاج وبالأسفل درجين خشب",
+   "qty": 3,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-54243": {
+   "alloc": {
+    "d-cit-alwajh-r-10001": 1,
+    "d-cit-alwajh-r-10003": 1,
+    "d-cit-alwajh-r-20001": 1,
+    "d-cit-alwajh-r-20003": 1
+   },
+   "code": "54243",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 10001-10003-20001-20003",
+   "name": "سبورة بيضاء ثابتة 240 × 120 سم",
+   "qty": 4,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-51572": {
+   "code": "51572",
+   "dept": "d-cit-alwajh",
+   "loc": "المستودع",
+   "name": "وحدة تدريب دوائر رقمية تعمل بنظام Panel",
+   "qty": 5,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-53994": {
+   "code": "53994",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب السكرتير",
+   "name": "آلة تصوير توشيبا موديل e-STUDIO 8518",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-46160": {
+   "code": "46160",
+   "dept": "d-cit-alwajh",
+   "loc": "المستودع",
+   "name": "دولاب باب بني",
+   "qty": 2,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-3782": {
+   "code": "3782",
+   "dept": "d-cit-alwajh",
+   "loc": "المطبخ",
+   "name": "برادة ماء صنبورين 220 فولت",
+   "qty": 2,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-54159": {
+   "code": "54159",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب رئيس القسم",
+   "name": "طابعة ليزر HP LaserJet Pro M255dw",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-53176": {
+   "code": "53176",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب رئيس القسم",
+   "name": "مكتب رئيس قسم فاخر مع ملحق وساتر أمامي، ودولاب درفتين خشب، وطقم طاولات، وكرسي دوار طبي، وكرسيي انتظار، وطاولة شاي",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-54016": {
+   "code": "54016",
+   "dept": "d-cit-alwajh",
+   "loc": "المطبخ",
+   "name": "مايكروويف ELBA",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-50542": {
+   "alloc": {
+    "d-cit-alwajh-r-10002": 8
+   },
+   "code": "50542",
+   "dept": "d-cit-alwajh",
+   "loc": "ورشة 10002",
+   "name": "طاولة معمل (ورشة) مخصصة للمتدربين",
+   "qty": 8,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-37052": {
+   "alloc": {
+    "d-cit-alwajh-r-20004": 1
+   },
+   "code": "37052",
+   "dept": "d-cit-alwajh",
+   "loc": "قاعة 20004",
+   "name": "سبورة بيضاء 240 × 120 سم",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-54857": {
+   "code": "54857",
+   "dept": "d-cit-alwajh",
+   "loc": "",
+   "name": "جهاز كمبيوتر مكتبي مع شاشة Dell",
+   "qty": 65,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-22023": {
+   "alloc": {
+    "d-cit-alwajh-r-10002": 2
+   },
+   "code": "22023",
+   "dept": "d-cit-alwajh",
+   "loc": "ورشة 10002",
+   "name": "دولاب حديد درفتين زجاج",
+   "qty": 2,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-52558": {
+   "code": "52558",
+   "dept": "d-cit-alwajh",
+   "loc": "مكتب رئيس القسم",
+   "name": "فرامة ورق intimus موديل 300 S",
+   "qty": 1,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-53748": {
+   "code": "53748",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 20002 -20003",
+   "name": "كابينة سيرفر (ADF) مقاس 42U",
+   "qty": 3,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-45884": {
+   "code": "45884",
+   "dept": "d-cit-alwajh",
+   "loc": "المستودع",
+   "name": "جهاز ترقيم الكابلات للشبكة",
+   "qty": 1,
+   "unit": "متر"
+  },
+  "d-cit-alwajh-i-55689": {
+   "code": "55689",
+   "dept": "d-cit-alwajh",
+   "loc": "",
+   "name": "جهاز كمبيوتر HP Pro Tower 400 G9 (i7)",
+   "qty": 55,
+   "unit": "عدد"
+  },
+  "d-cit-alwajh-i-55762": {
+   "alloc": {
+    "d-cit-alwajh-r-20001": 1
+   },
+   "code": "55762",
+   "dept": "d-cit-alwajh",
+   "loc": "معمل 20001",
+   "name": "طاولة مدرب بدرج مقاس 120 × 60 × 74 سم، معدنية بسطح خشب",
+   "qty": 1,
+   "unit": "عدد"
+  }
+ }
+}

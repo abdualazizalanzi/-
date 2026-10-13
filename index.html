@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>عهدة الأقسام والقاعات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap">
+<style>
+/* Layout: sticky header with department switcher + tabs; content column max 1180px; door-plate room cards */
+:root{
+  --bg:#F2F4F3; --surface:#FFFFFF; --sunk:#F7F9F8; --ink:#16231F; --muted:#5B6964; --line:#DCE3E0;
+  --accent:#0F6B5A; --accent-ink:#FFFFFF; --accent-soft:#E0EEEA;
+  --warn:#9A5B00; --warn-soft:#FBF0DC; --danger:#B3261E; --danger-soft:#FBE4E2; --ok:#2E7D4F;
+  --plate:#1D2B27; --plate-ink:#F2F4F3;
+  --f-display:"Readex Pro","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1412; --surface:#161F1C; --sunk:#121a17; --ink:#E5ECE9; --muted:#9AA8A3; --line:#29352F;
+  --accent:#53C2A7; --accent-ink:#06201A; --accent-soft:#163029;
+  --warn:#E5AC4F; --warn-soft:#33280F; --danger:#F08A80; --danger-soft:#3A1A17; --ok:#6BCB8F;
+  --plate:#E5ECE9; --plate-ink:#0E1412; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1412; --surface:#161F1C; --sunk:#121a17; --ink:#E5ECE9; --muted:#9AA8A3; --line:#29352F;
+  --accent:#53C2A7; --accent-ink:#06201A; --accent-soft:#163029;
+  --warn:#E5AC4F; --warn-soft:#33280F; --danger:#F08A80; --danger-soft:#3A1A17; --ok:#6BCB8F;
+  --plate:#E5ECE9; --plate-ink:#0E1412; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.6;font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding-block:14px 10px}
+.brand h1{font-family:var(--f-display);font-size:20px;font-weight:700;margin:0;text-wrap:balance}
+.brand .sub{color:var(--muted);font-size:13px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input,textarea,button{font:inherit;color:inherit}
+select,input[type=text],input[type=number],input[type=search]{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-width:0}
+select:focus-visible,input:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 14px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.btn.danger{color:var(--danger)}
+.btn.danger.armed{background:var(--danger);color:#fff;border-color:var(--danger)}
+.btn.small{padding:4px 10px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.status{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.status.local{background:var(--warn-soft);color:var(--warn)}
+.status.ro{background:var(--danger-soft);color:var(--danger)}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:0}
+nav.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:8px 14px;cursor:pointer;color:var(--muted);font-weight:500;white-space:nowrap}
+nav.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--accent)}
+main{padding-block:22px 60px;display:grid;gap:22px}
+h2{font-family:var(--f-display);font-size:17px;font-weight:600;margin:0}
+.sec-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hint{color:var(--muted);font-size:13px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.kpi .lab{color:var(--muted);font-size:13px;letter-spacing:.01em}
+.kpi .val{font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1.2}
+.kpi .cmp{font-size:12px;color:var(--muted)}
+.kpi .cmp b{color:var(--ink);font-weight:600}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:22px}
+.grid2>*{min-width:0}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,9.5rem) 1fr 3rem;gap:10px;align-items:center;font-size:13px}
+.bar .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .track{height:12px;background:var(--sunk);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar .fill{height:100%;background:var(--accent);border-radius:6px}
+.bar .fill.none{background:var(--warn)}
+.bar .n{text-align:left;font-weight:600}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+th{background:var(--sunk);font-weight:600;font-size:13px;color:var(--muted);white-space:nowrap;position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.num{text-align:center}
+td input{width:100%;border:1px solid transparent;background:transparent;padding:5px 7px;border-radius:6px}
+td input:hover{border-color:var(--line)}
+td input:focus{border-color:var(--accent);background:var(--surface)}
+td input.qty{width:5.5rem;text-align:center}
+td input.code{width:6.5rem}
+td input.unit{width:5rem}
+td input.loc{min-width:11rem}
+td input.nm{min-width:16rem}
+.chip{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.chip.ok{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
+.room{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.plate{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:var(--plate);color:var(--plate-ink)}
+.plate .t{font-size:12px;opacity:.75;letter-spacing:.04em}
+.plate .no{font-family:var(--f-display);font-size:26px;font-weight:700;letter-spacing:.06em;direction:ltr}
+.plate select{background:transparent;color:var(--plate-ink);border-color:color-mix(in srgb,var(--plate-ink) 30%,transparent);padding:3px 8px;font-size:13px}
+.plate select option{color:#16231F;background:#fff}
+.room .body{padding:12px 14px;display:grid;gap:10px}
+.counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.counts label{display:grid;gap:2px;font-size:12px;color:var(--muted)}
+.counts input{width:100%;text-align:center;font-weight:600;font-size:16px;padding:5px}
+.room .foot{display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between;align-items:center;padding:10px 14px;border-top:1px solid var(--line);background:var(--sunk)}
+.room details summary{cursor:pointer;font-size:13px;color:var(--accent)}
+.room ul{margin:6px 0 0;padding-inline-start:18px;font-size:13px}
+.room input.rname{width:100%}
+.ritems{border:1px solid var(--line);border-radius:8px}
+.ritems .rh{font-size:12px;color:var(--muted);background:var(--sunk);padding:6px 10px;border-bottom:1px solid var(--line)}
+.ritems .ri{display:flex;justify-content:space-between;gap:10px;padding:7px 10px;font-size:13.5px;line-height:1.5;border-bottom:1px solid var(--line)}
+.ritems .ri:last-child{border-bottom:0}
+.ritems .rn{min-width:0;flex:1}
+.rooms{align-items:start}
+.ritems .rq{font-weight:600;white-space:nowrap}
+.addrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.addrow input{width:8rem}
+.empty{border:1px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--muted);background:var(--surface)}
+.drop{border:2px dashed var(--line);border-radius:var(--r);padding:26px;text-align:center;background:var(--sunk);cursor:pointer}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop input{display:none}
+.form{display:grid;gap:12px}
+.form .row{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.form label.f{display:grid;gap:4px;font-size:13px;color:var(--muted);min-width:min(100%,240px);flex:1}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline:16px;margin-inline:auto;max-width:420px;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;text-align:center;z-index:20}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar input[type=search]{flex:1;min-width:min(100%,220px)}
+.att li{margin-block:4px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:6px 11px;cursor:pointer;font-size:13px;color:var(--muted)}
+.seg button+button{border-inline-start:1px solid var(--line)}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.stat{background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:5px 8px;display:flex;justify-content:space-between;gap:6px;font-size:12px;color:var(--muted)}
+.stat b{color:var(--ink);font-size:15px}
+.stat.zero b{color:var(--muted);font-weight:400}
+.capr{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.capr input{width:5.5rem;text-align:center}
+.ritems .ri{align-items:center}
+.ritems .ri input{width:4.2rem;text-align:center;padding:3px 4px}
+.ritems .acts{display:flex;gap:6px;align-items:center;white-space:nowrap}
+.allocadd{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;background:var(--sunk);border-top:1px solid var(--line)}
+.allocadd select{flex:1;min-width:0;width:100%;font-size:13px;padding:5px 6px}
+.allocadd input{width:4.5rem;text-align:center;padding:5px}
+.chip.bad{background:var(--danger-soft);color:var(--danger);border-color:transparent}
+.plate .no.txt{font-size:19px;letter-spacing:0}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.jump a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px}
+.jump a b{color:var(--accent);margin-inline-start:4px}
+.rsec{display:grid;gap:12px;scroll-margin-top:120px}
+.rsec>.sec-head{margin-bottom:0;padding-top:10px;border-top:1px solid var(--line)}
+.plate .who{font-size:15px;font-weight:600;margin-top:2px}
+.plate .who.none{opacity:.6;font-weight:400;font-size:13px}
+.room.office .plate{background:var(--accent);color:var(--accent-ink)}
+.room.office .plate select{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-ink) 35%,transparent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fl{display:grid;gap:2px;font-size:12px;color:var(--muted);min-width:0}
+.fl input{width:100%}
+.offices{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:12px}
+.ocard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:4px}
+.otop{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.onum{font-family:var(--f-display);font-weight:600;color:var(--accent)}
+.oname{font-size:17px;font-weight:600}
+.oname.none{color:var(--warn);font-size:14px;font-weight:500}
+tr.tot td{background:var(--accent-soft)}
+.allocadd{display:grid;gap:6px;padding:8px 10px;background:var(--sunk);border-top:1px solid var(--line)}
+.pk{position:relative}
+.pk input{width:100%;font-size:14px;padding:7px 10px}
+.pkdrop{margin-top:4px;background:var(--surface);border:1px solid var(--accent);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);max-height:300px;overflow:auto}
+.pkt{font-size:13px}
+.pkt th{position:sticky;top:0;background:var(--sunk);padding:6px 8px}
+.pkt td{padding:6px 8px;cursor:pointer;line-height:1.45}
+.pkt td.c{text-align:center;white-space:nowrap}
+.pkt tr[data-pick-item]:hover td,.pkt tr[data-pick-item]:focus td{background:var(--accent-soft)}
+.pkt tr[data-pick-item]:focus{outline:none}
+.pkempty{padding:12px;color:var(--muted);font-size:13px;text-align:center}
+.pksel{display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:6px 8px;font-size:13px}
+.pksel .c{white-space:nowrap;font-weight:600}
+.pksel .n{min-width:0}
+.pksel .btn{padding:2px 8px}
+.pkrow{display:flex;gap:6px}
+.pkrow input{width:6rem;text-align:center;padding:5px}
+.pkrow .btn{flex:1}
+.rtab{font-size:13px}
+.rtab th{background:var(--surface);padding:5px 6px;font-size:12px}
+.rtab td{padding:5px 6px;line-height:1.45}
+.rtab td.c{text-align:center;white-space:nowrap;width:1%}
+.rtab td input{width:3.8rem;text-align:center;padding:3px 4px;border:1px solid var(--line)}
+.footl{display:flex;gap:10px;align-items:center}
+.printbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:10px}
+.printbar .pl{font-weight:600}
+.printbar select{flex:1;min-width:min(100%,220px)}
+@media (prefers-reduced-motion:no-preference){.bar .fill{transition:width .4s ease}}
+</style>
+<style>html{color-scheme:light}body{margin:0;font-family:var(--f-body);font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div id="app" dir="rtl">
+  <header class="top">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <h1>عهدة الأقسام والقاعات</h1>
+          <div class="sub" id="subline">جارٍ تحميل البيانات المحفوظة…</div>
+        </div>
+        <div class="controls">
+          <select id="deptSel" aria-label="القسم"></select>
+          <div class="seg" id="themeSeg" role="group" aria-label="المظهر"><button data-theme-set="light">نهاري</button><button data-theme-set="dark">ليلي</button><button data-theme-set="auto">تلقائي</button></div>
+          <span class="status" id="saveStatus">جارٍ الاتصال…</span>
+        </div>
+      </div>
+      <nav class="tabs" role="tablist" id="tabs">
+        <button role="tab" data-tab="overview" aria-selected="true">نظرة عامة</button>
+        <button role="tab" data-tab="rooms" aria-selected="false">القاعات والمكاتب</button>
+        <button role="tab" data-tab="items" aria-selected="false">أصناف العهدة</button>
+        <button role="tab" data-tab="io" aria-selected="false">Excel والنسخ الاحتياطي</button>
+        <button role="tab" data-tab="depts" aria-selected="false">الأقسام</button>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="main">
+    <div class="empty">جارٍ تحميل البيانات المحفوظة. إذا كانت هذه أول مرة، ابدأ من تبويب «استيراد وتصدير» وارفع ملف Excel.</div>
+  </main>
+</div>
+<div class="toast" id="toast" dir="rtl" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
+<script>
+(() => {
+try { document.documentElement.setAttribute("dir", "rtl"); document.documentElement.setAttribute("lang", "ar"); } catch {}
+const ROOM_TYPES = ["قاعة","معمل","ورشة","مكتب مدرب","غرفة مدربين","مستودع","غرفة سيرفرات","غرفة بيانات","مكتب","أخرى"];
+const SECTIONS = [
+  {key:"halls", title:"القاعات والمعامل", types:["قاعة","معمل","ورشة"], ph:"رقم القاعة، مثل 20005"},
+  {key:"offices", title:"مكاتب المدربين", types:["مكتب مدرب","غرفة مدربين"], ph:"اسم المكتب، مثل مكتب 6"},
+  {key:"other", title:"المستودع وغرفة السيرفرات وغرف أخرى", types:["مستودع","غرفة سيرفرات","غرفة بيانات","مكتب","أخرى"], ph:"اسم الغرفة، مثل المستودع"}];
+const sectionOf = t => SECTIONS.find(s => s.types.includes(t)) || SECTIONS[2];
+const isOffice = r => sectionOf(r.type).key === "offices";
+const CATS = [["tables","طاولات متدربين"],["chairs","كراسي متدربين"],["computers","أجهزة حاسب"],["screens","شاشات"],["projectors","أجهزة عرض"],["boards","سبورات"]];
+const COUNT_FIELDS = [["capacity","السعة"], ...CATS];
+const LS_KEY = "inv-dash-v1";
+const S = { depts:{}, rooms:{}, items:{} };
+const ui = { cur: "all", tab: "overview", q: "", noLoc: false, confirm: null, imp: null, restore: null, busy: false, mode: "loading", readOnly: false, pending: 0, pick: {room:null, q:"", sel:null, open:false} };
+let db = null, downloads = null, api = false;
+const STANDALONE = !(window.claude && window.claude.use);
+const canSave = () => !!downloads || STANDALONE;
+async function saveFile(filename, data, type){
+  if (downloads) return downloads.save({filename, data});
+  const blob = data instanceof Blob ? data : new Blob([data], {type: type || "application/octet-stream"});
+  const url = URL.createObjectURL(blob), a = document.createElement("a");
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  return {status:"saved"};
+}
+async function apiCall(method, path, body){
+  const r = await fetch("api/" + path, {method, headers: body ? {"Content-Type":"application/json"} : {}, body: body ? JSON.stringify(body) : undefined, cache:"no-store"});
+  if (!r.ok) throw {code: r.status === 403 ? "invalid_argument" : "unavailable"};
+  return r.status === 204 ? null : r.json();
+}
+let apiVersion = null;
+async function apiLoad(){
+  const d = await apiCall("GET", "all");
+  apiVersion = d.version;
+  for (const col of ["depts","rooms","items"]) { S[col] = d[col] || {}; S["_"+col] = true; }
+  schedule();
+}
+async function apiPoll(){
+  if (ui.pending || document.hidden) return;
+  try { const v = await apiCall("GET", "version"); if (v.version !== apiVersion) await apiLoad(); } catch {}
+}
+
+try { const t = localStorage.getItem("inv-ui"); if (t) Object.assign(ui, JSON.parse(t)); } catch {}
+ui.confirm = null; ui.imp = null; ui.restore = null; ui.busy = false; ui.pending = 0;
+const saveUi = () => { try { localStorage.setItem("inv-ui", JSON.stringify({cur:ui.cur, tab:ui.tab})); } catch {} };
+
+/* ---------- theme ---------- */
+function applyTheme(t){
+  const root = document.documentElement;
+  if (t === "light" || t === "dark") root.setAttribute("data-theme", t); else root.removeAttribute("data-theme");
+  document.querySelectorAll("#themeSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.themeSet === (t || "auto"))));
+}
+let theme = "auto"; try { theme = localStorage.getItem("inv-theme") || "auto"; } catch {}
+applyTheme(theme);
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num = v => { const n = Number(String(v ?? "").replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/,/g, "")); return isFinite(n) ? n : 0; };
+const fmt = n => Number(n || 0).toLocaleString("ar-SA-u-nu-latn");
+const safe = s => String(s).replace(/[^A-Za-z0-9_.~:@+-]/g, "_").slice(0, 120) || "x";
+const rid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const norm = s => String(s ?? "").replace(/\s+/g, " ").trim();
+const roomId = (dept, n) => /^[A-Za-z0-9_.-]+$/.test(n) ? dept + "-r-" + n : rid(dept + "-r-");
+
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 3400); }
+
+/* ---------- classification ---------- */
+function category(name){
+  const n = String(name || "");
+  if (/جهاز عرض|بروجكتر|بروجيكتر|داتا شو/.test(n)) return "projectors";
+  if (/سبور/.test(n)) return "boards";
+  if (/طاول/.test(n)) return /مدرب|مدرس|شاي/.test(n) ? null : "tables";
+  if (/كرسي|كراسي/.test(n)) return /مدرب|انتظار|زائر|طبي/.test(n) ? null : "chairs";
+  if (/شاشة/.test(n)) return "screens";
+  if (/كمبيوتر|حاسب/.test(n) && !/طابعة|تحكم|راسم/.test(n)) return "computers";
+  return null;
+}
+const roomNums = loc => (String(loc || "").match(/\d{4,6}/g) || []);
+function extractRooms(items){
+  const found = {};
+  for (const it of items){
+    const loc = norm(it.loc); if (!loc) continue;
+    const re = /(قاعة|معمل|ورشة|مختبر|مستودع)?\s*-?\s*(\d{4,6})/g; let m, lastType = null;
+    while ((m = re.exec(loc))){ if (m[1]) lastType = m[1] === "مختبر" ? "معمل" : m[1]; const t = lastType || "قاعة"; if (!found[m[2]]) found[m[2]] = t; }
+  }
+  return found;
+}
+
+/* ---------- allocation: item.alloc = {roomId: qty} ---------- */
+const allocOf = it => (it && it.alloc && typeof it.alloc === "object") ? it.alloc : {};
+const allocated = it => Object.entries(allocOf(it)).reduce((a,[rid,n]) => a + (S.rooms[rid] ? num(n) : 0), 0);
+const avail = it => num(it.qty) - allocated(it);
+function roomAllocs(rid){
+  const out = [];
+  for (const [id, it] of Object.entries(S.items)){ const n = num(allocOf(it)[rid]); if (n > 0) out.push({id, it, n}); }
+  return out.sort((a,b) => (a.it.name||"").localeCompare(b.it.name||"", "ar"));
+}
+function roomCounts(rid){
+  const c = {}; CATS.forEach(([f]) => c[f] = 0);
+  roomAllocs(rid).forEach(({it, n}) => { const k = category(it.name); if (k) c[k] += n; });
+  return c;
+}
+/* Distribute items whose «مكان التواجد» names rooms: one room gets all; several rooms split evenly when it divides. */
+function autoAllocPlan(items, rooms){
+  const byNum = {}; rooms.forEach(r => byNum[String(r.num)] = r.id);
+  const labs = rooms.filter(r => r.type === "معمل").map(r => r.id);
+  const plan = [];
+  for (const it of items){
+    if (Object.keys(allocOf(it)).some(k => S.rooms[k] || rooms.some(r => r.id === k))) continue;
+    let targets = roomNums(it.loc).map(n => byNum[n]).filter(Boolean);
+    if (!targets.length && byNum[norm(it.loc)]) targets = [byNum[norm(it.loc)]];
+    if (!targets.length && /جميع المعامل/.test(it.loc || "")) targets = labs;
+    if (!targets.length) continue;
+    const q = num(it.qty); if (q <= 0 || q % targets.length) continue;
+    const alloc = {}; targets.forEach(t => alloc[t] = q / targets.length);
+    plan.push([it, alloc]);
+  }
+  return plan;
+}
+
+/* ---------- storage ---------- */
+function saveLocal(){ try { localStorage.setItem(LS_KEY, JSON.stringify({depts:S.depts, rooms:S.rooms, items:S.items})); } catch {} }
+function loadLocal(){ try { const d = JSON.parse(localStorage.getItem(LS_KEY) || "null"); if (d) Object.assign(S, d); } catch {} }
+function setStatus(){
+  const el = $("#saveStatus");
+  if (ui.mode === "loading") { el.className = "status"; el.textContent = "جارٍ الاتصال…"; return; }
+  if (ui.readOnly) { el.className = "status ro"; el.textContent = "عرض فقط"; return; }
+  if (ui.pending) { el.className = "status"; el.textContent = "جارٍ الحفظ…"; return; }
+  if (ui.mode === "db" || ui.mode === "api") { el.className = "status"; el.textContent = ui.mode === "api" ? "✓ محفوظ على الخادم" : "✓ محفوظ"; }
+  else { el.className = "status local"; el.textContent = "محفوظ في هذا المتصفح فقط"; }
+}
+async function write(col, id, data){
+  if (ui.readOnly) { toast("لا تملك صلاحية التعديل على هذه اللوحة."); return false; }
+  if (data === null) delete S[col][id]; else S[col][id] = data;
+  if (!db && !api){ saveLocal(); schedule(); return true; }
+  ui.pending++; setStatus(); schedule();
+  const run = api
+    ? () => apiCall(data === null ? "DELETE" : "PUT", encodeURIComponent(col) + "/" + encodeURIComponent(id), data === null ? undefined : data).then(r => { if (r && r.version) apiVersion = r.version; })
+    : () => { const ref = db.collection(col).doc(id); return data === null ? ref.delete() : ref.set(data); };
+  try { await run(); return true; }
+  catch (e) {
+    if (e && e.code === "invalid_argument") { ui.readOnly = true; toast("لم يُحفظ التعديل: صلاحيتك على هذه اللوحة للعرض فقط."); }
+    else if (e && e.code === "quota_exceeded") toast("امتلأت مساحة الحفظ. احذف بعض السجلات ثم أعد المحاولة.");
+    else { await new Promise(r => setTimeout(r, 600 + Math.random()*600)); try { await run(); return true; } catch { toast("تعذّر الحفظ. أعد المحاولة."); } }
+    return false;
+  } finally { ui.pending--; setStatus(); }
+}
+async function writeMany(ops, onProgress){
+  let done = 0; const queue = ops.slice();
+  async function worker(){ while (queue.length){ const [c,i,d] = queue.shift(); await write(c,i,d); done++; onProgress && onProgress(done, ops.length); } }
+  await Promise.all(Array.from({length: Math.min(8, ops.length)}, worker));
+}
+async function initStore(){
+  try { if (window.claude && window.claude.use) db = await window.claude.use("db"); } catch { db = null; }
+  try { if (window.claude && window.claude.use) downloads = await window.claude.use("downloads"); } catch { downloads = null; }
+  if (db){
+    ui.mode = "db";
+    try { const user = await window.claude.use("user"); if (user){ const c = await user.can("data.write"); if (c === false) ui.readOnly = true; } } catch {}
+    for (const col of ["depts","rooms","items"]){
+      db.collection(col).onSnapshot(snap => {
+        const o = {}; snap.docs.forEach(d => { if (d.exists) o[d.id] = d.data(); }); S[col] = o; S["_"+col] = true; schedule();
+      }, err => { if (err && err.code === "revoked") { ui.readOnly = true; schedule(); } });
+    }
+  } else {
+    try { const r = await fetch("api/ping", {cache:"no-store"}); api = r.ok && (await r.json()).ok === true; } catch { api = false; }
+    if (api){
+      ui.mode = "api";
+      try { await apiLoad(); } catch { api = false; }
+      if (api) setInterval(apiPoll, 15000);
+    }
+    if (!api){ ui.mode = "local"; loadLocal(); S._depts = S._rooms = S._items = true; }
+  }
+  setStatus(); schedule();
+}
+
+/* ---------- selectors ---------- */
+const deptList = () => Object.entries(S.depts).map(([id,d]) => ({id, ...d})).sort((a,b) => (a.name||"").localeCompare(b.name||"", "ar"));
+const inCur = o => ui.cur === "all" || o.dept === ui.cur;
+const itemsCur = () => Object.entries(S.items).map(([id,d]) => ({id, ...d})).filter(inCur).sort((a,b) => (num(a.code)||1e12) - (num(b.code)||1e12) || (a.name||"").localeCompare(b.name||"","ar"));
+const roomsCur = () => Object.entries(S.rooms).map(([id,d]) => ({id, ...d})).filter(inCur).sort((a,b) => ROOM_TYPES.indexOf(a.type) - ROOM_TYPES.indexOf(b.type) || String(a.num).localeCompare(String(b.num), "ar", {numeric:true}));
+const deptName = id => (S.depts[id] && S.depts[id].name) || "قسم بدون اسم";
+
+/* ---------- render ---------- */
+let rq = 0;
+function schedule(){ if (!rq) rq = requestAnimationFrame(() => { rq = 0; render(); }); }
+function render(){
+  const ae = document.activeElement, aeId = ae && ae.id, aeVal = ae && "value" in ae ? ae.value : null;
+  let selS = null, selE = null; try { selS = ae.selectionStart; selE = ae.selectionEnd; } catch {}
+  if (ui.cur !== "all" && !S.depts[ui.cur] && S._depts) ui.cur = "all";
+  const ds = deptList();
+  $("#deptSel").innerHTML = `<option value="all">كل الأقسام (${ds.length})</option>` + ds.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("");
+  $("#deptSel").value = ui.cur;
+  const d = S.depts[ui.cur];
+  $("#subline").textContent = ui.cur === "all" ? (ds.length ? "عرض مجمّع لكل الأقسام" : "لا توجد أقسام بعد") : [d && d.college, "عهدة القسم"].filter(Boolean).join(" · ");
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === ui.tab)));
+  setStatus();
+  const m = $("#main");
+  if (!(S._depts && S._rooms && S._items)) { m.innerHTML = `<div class="empty">جارٍ تحميل البيانات المحفوظة…</div>`; return; }
+  m.innerHTML = ({overview: vOverview, rooms: vRooms, items: vItems, io: vIO, depts: vDepts}[ui.tab] || vOverview)();
+  if (aeId){ const el = document.getElementById(aeId); if (el && el !== document.activeElement){ if (aeVal !== null && el.value !== aeVal && el.type !== "file" && el.tagName !== "SELECT") el.value = aeVal; el.focus(); try { if (selS !== null) el.setSelectionRange(selS, selE); } catch {} } }
+}
+
+function noDeptState(){
+  return `<div class="empty"><p style="margin-top:0"><b>لا توجد بيانات محفوظة بعد.</b></p><p>ارفع ملف حصر الأصناف (Excel) من تبويب الاستيراد، أو أنشئ قسمًا جديدًا يدويًا.</p>
+  <div class="toolbar" style="justify-content:center"><button class="btn primary" data-act="tab" data-v="io">استيراد ملف Excel</button><button class="btn" data-act="tab" data-v="depts">إضافة قسم</button></div></div>`;
+}
+
+function vOverview(){
+  if (!deptList().length) return noDeptState();
+  const items = itemsCur(), rooms = roomsCur();
+  const counts = {}; rooms.forEach(r => counts[r.id] = roomCounts(r.id));
+  const sumR = f => f === "capacity" ? rooms.reduce((a,r) => a + num(r.capacity), 0) : rooms.reduce((a,r) => a + counts[r.id][f], 0);
+  const sumI = c => items.reduce((a,i) => a + (category(i.name) === c ? num(i.qty) : 0), 0);
+  const totalQty = items.reduce((a,i) => a + num(i.qty), 0);
+  const totalAlloc = items.reduce((a,i) => a + allocated(i), 0);
+  const kpi = (lab, val, cmp) => `<div class="kpi"><div class="lab">${lab}</div><div class="val">${fmt(val)}</div>${cmp ? `<div class="cmp">${cmp}</div>` : ""}</div>`;
+  const cmp = c => `من إجمالي العهدة: <b>${fmt(sumI(c))}</b>`;
+  const byType = ROOM_TYPES.map(t => [t, rooms.filter(r => r.type === t).length]).filter(x => x[1]).map(x => `${x[1]} ${x[0]}`).join(" · ");
+  const locMap = {};
+  items.forEach(i => { const k = norm(i.loc) || "بدون موقع"; locMap[k] = (locMap[k] || 0) + num(i.qty); });
+  const locs = Object.entries(locMap).sort((a,b) => b[1]-a[1]).slice(0, 10);
+  const maxL = Math.max(1, ...locs.map(x => x[1]));
+  const noLoc = items.filter(i => !norm(i.loc));
+  const over = items.filter(i => avail(i) < 0);
+  const halls = rooms.filter(r => !isOffice(r)), offices = rooms.filter(isOffice);
+  const emptyRooms = halls.filter(r => !roomAllocs(r.id).length);
+  const noPerson = offices.filter(r => !r.person);
+  return `
+  <section class="kpis">
+    ${kpi("القاعات والمعامل", halls.length, `ومكاتب المدربين: <b>${fmt(offices.length)}</b>`)}
+    ${kpi("طاولات المتدربين في القاعات", sumR("tables"), cmp("tables"))}
+    ${kpi("كراسي المتدربين في القاعات", sumR("chairs"), cmp("chairs"))}
+    ${kpi("أجهزة الحاسب في القاعات", sumR("computers"), cmp("computers"))}
+    ${kpi("قطع موزّعة على القاعات", totalAlloc, `المتبقي في الإجمالي: <b>${fmt(totalQty - totalAlloc)}</b> من ${fmt(totalQty)}`)}
+    ${kpi("أصناف العهدة", items.length, `السعة الاستيعابية: <b>${fmt(sumR("capacity"))}</b> متدرب`)}
+  </section>
+  <div class="grid2">
+    <section class="panel">
+      <div class="sec-head"><h2>القطع حسب مكان التواجد</h2><span class="hint">أعلى ${locs.length} مواقع</span></div>
+      ${locs.length ? `<div class="bars">${locs.map(([k,v]) => `<div class="bar"><span class="name" title="${esc(k)}">${esc(k)}</span><span class="track"><span class="fill ${k==="بدون موقع"?"none":""}" style="width:${(v/maxL*100).toFixed(1)}%;display:block"></span></span><span class="n">${fmt(v)}</span></div>`).join("")}</div>` : `<p class="hint">لا توجد أصناف بعد.</p>`}
+    </section>
+    <section class="panel">
+      <div class="sec-head"><h2>يحتاج انتباه</h2></div>
+      <ul class="att" style="margin:0;padding-inline-start:18px">
+        ${over.length ? `<li><span class="chip bad">${over.length} صنف موزّع أكثر من رصيده</span> ${over.slice(0,3).map(i => esc(i.name)).join("، ")}</li>` : ""}
+        ${noLoc.length ? `<li><span class="chip warn">${noLoc.length} صنف بدون موقع</span> بإجمالي ${fmt(noLoc.reduce((a,i)=>a+num(i.qty),0))} قطعة: ${noLoc.slice(0,4).map(i => esc(i.name)).join("، ")}${noLoc.length>4?"…":""} <button class="btn small" data-act="noloc">عرضها</button></li>` : `<li><span class="chip ok">كل الأصناف لها موقع</span></li>`}
+        ${noPerson.length ? `<li><span class="chip warn">${noPerson.length} مكتب بدون اسم مدرب</span> ${noPerson.slice(0,5).map(r => esc(r.num)).join("، ")} <button class="btn small" data-act="tab" data-v="rooms">تسمية المكاتب</button></li>` : ""}
+        ${emptyRooms.length ? `<li><span class="chip warn">${emptyRooms.length} قاعة بلا أصناف</span> ${emptyRooms.slice(0,6).map(r => esc(r.num)).join("، ")} <button class="btn small" data-act="tab" data-v="rooms">توزيع الأصناف</button></li>` : rooms.length ? `<li><span class="chip ok">كل القاعات فيها أصناف</span></li>` : ""}
+      </ul>
+    </section>
+  </div>
+  <section>
+    <div class="sec-head"><h2>جدول القاعات والمعامل</h2><button class="btn small" data-act="tab" data-v="rooms">تعديل القاعات</button></div>
+    ${halls.length ? `<div class="tbl-wrap"><table><thead><tr><th>القاعة</th><th>النوع</th>${ui.cur==="all"?"<th>القسم</th>":""}${COUNT_FIELDS.map(([,l]) => `<th>${l}</th>`).join("")}<th>أصناف</th></tr></thead><tbody>
+      ${halls.map(r => `<tr><td><b>${esc(r.num)}</b>${r.name ? ` <span class="hint">${esc(r.name)}</span>` : ""}</td><td>${esc(r.type)}</td>${ui.cur==="all"?`<td>${esc(deptName(r.dept))}</td>`:""}${COUNT_FIELDS.map(([f]) => { const v = f==="capacity" ? num(r.capacity) : counts[r.id][f]; return `<td class="num">${v ? fmt(v) : `<span class="hint">—</span>`}</td>`; }).join("")}<td class="num">${roomAllocs(r.id).length}</td></tr>`).join("")}
+      <tr class="tot"><td><b>الإجمالي</b></td><td></td>${ui.cur==="all"?"<td></td>":""}${COUNT_FIELDS.map(([f]) => `<td class="num"><b>${fmt(halls.reduce((a,r) => a + (f==="capacity" ? num(r.capacity) : counts[r.id][f]), 0))}</b></td>`).join("")}<td></td></tr>
+    </tbody></table></div>` : `<div class="empty">لا توجد قاعات مسجّلة لهذا القسم. <button class="btn small" data-act="tab" data-v="rooms">إضافة قاعة</button></div>`}
+  </section>
+  <section>
+    <div class="sec-head"><h2>مكاتب المدربين <span class="hint">(${offices.length})</span></h2><button class="btn small" data-act="tab" data-v="rooms" data-sec="offices">إدارة المكاتب</button></div>
+    ${offices.length ? `<div class="offices">${offices.map(r => { const al = roomAllocs(r.id); return `<div class="ocard"><div class="otop"><span class="onum" dir="auto">${esc(r.num)}</span>${r.ext ? `<span class="hint">تحويلة ${esc(r.ext)}</span>` : ""}</div>
+      <div class="oname ${r.person ? "" : "none"}">${r.person ? esc(r.person) : "لم يُحدَّد المدرب"}</div>
+      <div class="hint">${al.length ? al.map(x => `${esc(x.it.name.split(/[،,(]/)[0].slice(0,34))} (${x.n})`).join(" · ") : "لا توجد عهدة مسجّلة"}</div></div>`; }).join("")}</div>`
+      : `<div class="empty">لا توجد مكاتب مدربين بعد. <button class="btn small" data-act="tab" data-v="rooms">إضافة مكتب</button></div>`}
+  </section>`;
+}
+
+function vRooms(){
+  if (!deptList().length) return noDeptState();
+  const rooms = roomsCur();
+  const canAdd = ui.cur !== "all";
+  const intro = `<div class="sec-head"><h2>القاعات والمكاتب <span class="hint">(${rooms.length})</span></h2>
+    ${canAdd ? `<button class="btn" data-act="extractRooms" title="ينشئ القاعات الناقصة من أرقام المواقع، ثم يوزّع الأصناف عليها">استخراج وتوزيع من المواقع</button>` : `<span class="hint">اختر قسمًا من الأعلى للإضافة</span>`}</div>
+    <p class="hint" style="margin:-4px 0 6px">إضافة صنف لقاعة أو مكتب تخصم الكمية من الإجمالي المتبقي، و«استرداد» يرجّعها للإجمالي.</p>
+    <div class="printbar"><span class="pl">طباعة نموذج العهدة</span>
+      <select id="printSel" aria-label="الموقع"><option value="__all">كل القاعات والمكاتب والمواقع</option>${printPlaces().map(p => `<option value="${esc(p.key)}">${esc(p.title)} (${p.rows.length} صنف)</option>`).join("")}</select>
+      <button class="btn primary" data-act="printSel">طباعة</button></div>
+    <nav class="jump">${SECTIONS.map(sec => `<a href="#sec-${sec.key}">${sec.title} <b>${rooms.filter(r => sectionOf(r.type) === sec).length}</b></a>`).join("")}</nav>`;
+  return intro + SECTIONS.map(sec => {
+    const list = rooms.filter(r => sectionOf(r.type) === sec);
+    const off = sec.key === "offices";
+    return `<section class="rsec" id="sec-${sec.key}">
+      <div class="sec-head"><h2>${sec.title} <span class="hint">(${list.length})</span></h2>
+      ${canAdd ? `<div class="addrow"><input type="text" id="newRoomNum-${sec.key}" placeholder="${sec.ph}" style="width:12rem">
+        ${off ? `<input type="text" id="newRoomPerson-${sec.key}" placeholder="اسم المدرب (اختياري)" style="width:12rem">` : ""}
+        ${sec.types.length > 1 && !off ? `<select id="newRoomType-${sec.key}">${sec.types.map(t => `<option>${t}</option>`).join("")}</select>` : ""}
+        <button class="btn primary" data-act="addRoom" data-id="${sec.key}">${off ? "إضافة مكتب" : "إضافة"}</button></div>` : ""}</div>
+      ${list.length ? `<div class="rooms">${list.map(roomCard).join("")}</div>` : `<div class="empty">لا يوجد شيء في هذا القسم بعد.</div>`}
+    </section>`;
+  }).join("");
+}
+function roomCard(r){
+  const e = esc(r.id), allocs = roomAllocs(r.id), c = roomCounts(r.id);
+  const pool = Object.entries(S.items).map(([id,it]) => ({id, ...it})).filter(it => it.dept === r.dept && avail(it) > 0).sort((a,b) => (a.name||"").localeCompare(b.name||"","ar"));
+  const ck = "delRoom:" + r.id, isNum = /^\d+$/.test(String(r.num)), off = isOffice(r);
+  const nonZero = CATS.filter(([f]) => c[f]);
+  return `<article class="room ${off ? "office" : ""}">
+    <div class="plate"><div style="min-width:0"><div class="t">${ui.cur==="all" ? esc(deptName(r.dept)) + " · " : ""}${off ? esc(r.type) : (isNum ? esc(r.type) + " رقم" : esc(r.type))}</div><div class="no ${isNum?"":"txt"}" dir="auto">${esc(r.num)}</div>
+      ${off ? `<div class="who ${r.person ? "" : "none"}">${r.person ? esc(r.person) : "لم يُحدَّد المدرب"}</div>` : ""}</div>
+      <select id="f-rooms-${e}-type" data-col="rooms" data-id="${e}" data-f="type" aria-label="النوع">${ROOM_TYPES.map(t => `<option ${t===r.type?"selected":""}>${t}</option>`).join("")}</select></div>
+    <div class="body">
+      ${off ? `<div class="two"><label class="fl" for="f-rooms-${e}-person">اسم المدرب<input type="text" id="f-rooms-${e}-person" data-col="rooms" data-id="${e}" data-f="person" value="${esc(r.person)}" placeholder="اكتب اسم المدرب"></label>
+        <label class="fl" for="f-rooms-${e}-num">اسم المكتب<input type="text" id="f-rooms-${e}-num" data-col="rooms" data-id="${e}" data-f="num" value="${esc(r.num)}"></label></div>
+        <div class="two"><label class="fl" for="f-rooms-${e}-name">الموقع / الدور<input type="text" id="f-rooms-${e}-name" data-col="rooms" data-id="${e}" data-f="name" value="${esc(r.name)}" placeholder="مثال: الدور الثاني"></label>
+        <label class="fl" for="f-rooms-${e}-ext">التحويلة<input type="text" id="f-rooms-${e}-ext" data-col="rooms" data-id="${e}" data-f="ext" value="${esc(r.ext)}" inputmode="numeric" placeholder="—"></label></div>`
+      : `<input type="text" class="rname" id="f-rooms-${e}-name" data-col="rooms" data-id="${e}" data-f="name" value="${esc(r.name)}" placeholder="اسم أو وصف (اختياري)">
+      <label class="capr" for="f-rooms-${e}-capacity">السعة<input type="number" min="0" id="f-rooms-${e}-capacity" data-col="rooms" data-id="${e}" data-f="capacity" data-num="1" value="${num(r.capacity) || ""}" placeholder="0">متدرب</label>
+      <div class="stats">${CATS.map(([f,l]) => `<div class="stat ${c[f]?"":"zero"}"><span>${l.replace(" متدربين","")}</span><b>${fmt(c[f])}</b></div>`).join("")}</div>`}
+      <div class="ritems">
+        <div class="rh">${off ? "عهدة المكتب" : "الأصناف في هذه القاعة"} (${allocs.length})</div>
+        ${allocs.length ? `<table class="rtab"><thead><tr><th>رقم الصنف</th><th>الصنف</th><th>العدد</th><th></th></tr></thead><tbody>
+        ${allocs.map(({id, it, n}) => { const k = "ret:" + r.id + ":" + id; return `<tr><td class="c">${esc(it.code || "—")}</td><td>${esc(it.name)}</td>
+          <td class="c"><input type="number" min="0" id="al-${e}-${esc(id)}" data-alloc-room="${e}" data-alloc-item="${esc(id)}" value="${n}" aria-label="العدد"></td>
+          <td class="c"><button class="btn small ${ui.confirm===k?"danger armed":""}" data-act="ret" data-id="${esc(id)}" data-v="${e}">${ui.confirm===k?"تأكيد":"استرداد"}</button></td></tr>`; }).join("")}
+        </tbody></table>` : `<div class="ri hint">لا توجد أصناف بعد. اكتب رقم الصنف بالأسفل لإضافته.</div>`}
+        ${pickerHtml(r, pool)}
+      </div>
+      <input type="text" id="f-rooms-${e}-notes" data-col="rooms" data-id="${e}" data-f="notes" value="${esc(r.notes)}" placeholder="ملاحظات">
+    </div>
+    <div class="foot"><span class="footl"><button class="btn small" data-act="print" data-id="${e}" ${allocs.length ? "" : "disabled"}>طباعة العهدة</button><span class="hint">${allocs.reduce((a,x)=>a+x.n,0) ? fmt(allocs.reduce((a,x)=>a+x.n,0)) + " قطعة" : ""}</span></span>
+      <button class="btn small danger ${ui.confirm===ck?"armed":""}" data-act="delRoom" data-id="${e}">${ui.confirm===ck?(off?"حذف المكتب وإرجاع عهدته؟":"حذف القاعة وإرجاع أصنافها؟"):"حذف"}</button></div>
+  </article>`;
+}
+
+function pickMatches(pool, q){
+  q = norm(q);
+  if (!q) return pool;
+  const digits = /^\d+$/.test(q);
+  const scored = [];
+  for (const it of pool){
+    const code = String(it.code || ""), name = String(it.name || "");
+    let s = -1;
+    if (code === q) s = 0; else if (code.startsWith(q)) s = 1; else if (!digits && name.includes(q)) s = 2; else if (code.includes(q)) s = 3;
+    if (s >= 0) scored.push([s, it]);
+  }
+  return scored.sort((a,b) => a[0] - b[0]).map(x => x[1]);
+}
+function pickerHtml(r, pool){
+  const e = esc(r.id), p = ui.pick, mine = p.room === r.id;
+  const sel = mine && p.sel && S.items[p.sel] ? {id:p.sel, ...S.items[p.sel]} : null;
+  const list = mine && p.open && !sel ? pickMatches(pool, p.q).slice(0, 40) : [];
+  return `<div class="allocadd">
+    <div class="pk">
+      <input type="text" id="pk-${e}" data-pick="${e}" value="${mine ? esc(p.q) : ""}" placeholder="اكتب رقم الصنف أو اسمه" autocomplete="off" aria-label="بحث عن صنف">
+      ${mine && p.open && !sel ? `<div class="pkdrop">${list.length ? `<table class="pkt"><thead><tr><th>رقم الصنف</th><th>الصنف</th><th>المتبقي</th></tr></thead><tbody>
+        ${list.map(it => `<tr data-pick-item="${esc(it.id)}" data-room="${e}" tabindex="-1"><td class="c">${esc(it.code || "—")}</td><td>${esc(it.name)}</td><td class="c"><b>${fmt(avail(it))}</b> <span class="hint">${esc(it.unit||"")}</span></td></tr>`).join("")}
+        </tbody></table>` : `<div class="pkempty">${pool.length ? "لا يوجد صنف بهذا الرقم أو الاسم له رصيد متبقٍ." : "كل الأصناف موزّعة، لا يوجد رصيد متبقٍ."}</div>`}</div>` : ""}
+    </div>
+    ${sel ? `<div class="pksel"><span class="c">${esc(sel.code || "—")}</span><span class="n">${esc(sel.name)}</span><span class="c">متبقٍ <b>${fmt(avail(sel))}</b></span><button class="btn small" data-act="unpick" data-id="${e}" aria-label="إلغاء الاختيار">✕</button></div>` : ""}
+    <div class="pkrow"><input type="number" min="1" id="add-${e}-qty" placeholder="العدد" aria-label="العدد" value="${sel && mine && p.qty ? esc(p.qty) : ""}">
+    <button class="btn small primary" data-act="alloc" data-id="${e}">إضافة للقاعة</button></div>
+  </div>`;
+}
+
+/* ---------- printable custody forms ---------- */
+function placeTitle(r){ return /^\d+$/.test(String(r.num)) ? `${r.type} ${r.num}` : String(r.num); }
+function printPlaces(){
+  const rooms = roomsCur().filter(r => roomAllocs(r.id).length);
+  const places = rooms.map(r => ({key:"r:" + r.id, title: placeTitle(r), kind: r.type, receiver: isOffice(r) ? (r.person || "") : "", dept: r.dept,
+    rows: roomAllocs(r.id).map(({it, n}) => ({code: it.code, name: it.name, qty: n, unit: it.unit}))}));
+  const roomNumsAll = new Set(Object.values(S.rooms).map(r => String(r.num)));
+  const groups = {};
+  itemsCur().forEach(it => { const a = avail(it); if (a <= 0) return; const loc = norm(it.loc) || "غير محدد الموقع";
+    if (roomNums(loc).some(n => roomNumsAll.has(n))) return;
+    const k = it.dept + "|" + loc; (groups[k] = groups[k] || {key:"l:" + k, title: loc, kind: "موقع", receiver: "", dept: it.dept, rows: []}).rows.push({code: it.code, name: it.name, qty: a, unit: it.unit}); });
+  return [...places, ...Object.values(groups).sort((a,b) => a.title.localeCompare(b.title, "ar"))];
+}
+function printHtml(places, noAuto){
+  let today = ""; try { today = new Date().toLocaleDateString("ar-SA-u-nu-latn-ca-gregory", {year:"numeric", month:"2-digit", day:"2-digit"}); } catch { today = new Date().toISOString().slice(0,10); }
+  const page = p => { const d = S.depts[p.dept] || {}; const total = p.rows.reduce((a,r) => a + num(r.qty), 0);
+    return `<section class="sheet">
+    <header><div class="org"><div>${esc(d.college || "")}</div><div>${esc(d.name || "")}</div></div>
+      <div class="ttl"><h1>نموذج استلام عهدة</h1><div class="place">${esc(p.title)}</div></div>
+      <div class="meta"><div>التاريخ: ${esc(today)}</div><div>عدد الأصناف: ${p.rows.length}</div><div>إجمالي القطع: ${fmt(total)}</div></div></header>
+    <table><thead><tr><th style="width:6%">م</th><th style="width:13%">رقم الصنف</th><th>الصنف</th><th style="width:9%">العدد</th><th style="width:9%">الوحدة</th><th style="width:20%">ملاحظات</th></tr></thead>
+    <tbody>${p.rows.map((r,i) => `<tr><td class="c">${i+1}</td><td class="c">${esc(r.code || "")}</td><td>${esc(r.name)}</td><td class="c"><b>${fmt(r.qty)}</b></td><td class="c">${esc(r.unit || "")}</td><td></td></tr>`).join("")}
+    <tr class="tot"><td colspan="3">الإجمالي</td><td class="c">${fmt(total)}</td><td colspan="2"></td></tr></tbody></table>
+    <p class="decl">أقرّ أنا الموقّع أدناه باستلام الأصناف الموضحة أعلاه بحالة سليمة، وأتعهد بالمحافظة عليها وعدم نقلها إلا بعد إشعار القسم.</p>
+    <div class="signs">
+      <div class="sg"><h3>المستلِم</h3><div>الاسم: <span class="ln">${esc(p.receiver)}</span></div><div>التوقيع: <span class="ln"></span></div><div>التاريخ: <span class="ln"></span></div></div>
+      <div class="sg"><h3>رئيس القسم</h3><div>الاسم: <span class="ln"></span></div><div>التوقيع: <span class="ln"></span></div><div>التاريخ: <span class="ln"></span></div></div>
+    </div></section>`; };
+  return `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>نماذج العهدة</title>
+<style>
+@page{size:A4;margin:14mm 12mm}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:#111;background:#e9ecea;font-size:13px}
+.bar{position:sticky;top:0;background:#0F6B5A;color:#fff;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.bar button{font:inherit;font-weight:600;background:#fff;color:#0F6B5A;border:0;border-radius:6px;padding:7px 18px;cursor:pointer}
+.sheet{background:#fff;width:210mm;min-height:297mm;margin:16px auto;padding:14mm 12mm;page-break-after:always;break-after:page}
+.sheet:last-child{page-break-after:auto;break-after:auto}
+header{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start;border-bottom:2px solid #0F6B5A;padding-bottom:10px;margin-bottom:14px}
+.org{font-weight:600;line-height:1.7}.meta{text-align:left;line-height:1.7;font-size:12px}
+.ttl{text-align:center}.ttl h1{font-size:18px;margin:0 0 4px}.place{display:inline-block;font-size:20px;font-weight:700;border:2px solid #111;border-radius:6px;padding:2px 16px}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid #333;padding:6px 7px;vertical-align:middle}th{background:#dfeee9;font-size:12.5px}
+td.c{text-align:center}tr.tot td{font-weight:700;background:#f2f2f2}
+.decl{margin:16px 0 10px;line-height:1.8}
+.signs{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:18px}.sg h3{font-size:14px;margin:0 0 8px}.sg div{margin:10px 0}.ln{display:inline-block;min-width:60%;border-bottom:1px dotted #333;padding:0 4px}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;width:auto;min-height:0;padding:0}}
+</style></head><body>
+<div class="bar"><span>${places.length} نموذج جاهز للطباعة</span><button onclick="print()">طباعة</button></div>
+${places.map(page).join("")}
+${noAuto ? "" : `<script>window.addEventListener("load",function(){setTimeout(function(){try{print()}catch(e){}},400)});<\/script>`}
+</body></html>`;
+}
+async function printForms(places){
+  if (!places.length){ toast("لا توجد أصناف للطباعة في هذا الموقع."); return; }
+  if (STANDALONE){
+    const fr = document.createElement("iframe");
+    fr.setAttribute("aria-hidden", "true");
+    fr.style.cssText = "position:fixed;width:0;height:0;border:0;left:-9999px;top:0";
+    document.body.appendChild(fr);
+    const doc = fr.contentWindow.document; doc.open(); doc.write(printHtml(places, true)); doc.close();
+    setTimeout(() => { try { fr.contentWindow.focus(); fr.contentWindow.print(); } catch { toast("تعذّرت الطباعة."); } setTimeout(() => fr.remove(), 60000); }, 500);
+    return;
+  }
+  if (!downloads){ toast("الطباعة تحتاج فتح اللوحة من رابطها في Claude."); return; }
+  const name = places.length === 1 ? `عهدة ${places[0].title}` : `نماذج العهدة ${stamp()}`;
+  try { await saveFile(name.replace(/[\\/:*?"<>|]/g, "-") + ".html", printHtml(places), "text/html"); toast("افتح الملف ليظهر لك أمر الطباعة مباشرة."); }
+  catch (e) {
+    if (e && e.code === "declined") return;
+    // fallback: printable Excel, one sheet per place
+    const wb = XLSX.utils.book_new(); const used = new Set();
+    places.forEach(p => { let n = p.title.replace(/[\\/?*\[\]:]/g, " ").slice(0, 28) || "موقع"; let k = n, i = 2; while (used.has(k)) k = n.slice(0, 25) + " " + i++; used.add(k);
+      const ws = styledSheet({title: "نموذج استلام عهدة — " + p.title, subtitle: (S.depts[p.dept] || {}).name || "", headers:["م","رقم الصنف","الصنف","العدد","الوحدة","ملاحظات"],
+        rows: p.rows.map((r,i) => [i+1, r.code, r.name, num(r.qty), r.unit, ""]), widths:[5,12,46,8,8,20], numCols:[0,1,3], totals:["","","الإجمالي", p.rows.reduce((a,r)=>a+num(r.qty),0), "", ""]});
+      ws["!margins"] = {left:0.4, right:0.4, top:0.5, bottom:0.5, header:0.2, footer:0.2};
+      XLSX.utils.book_append_sheet(wb, ws, k); });
+    wb.Workbook = {Views:[{RTL:true}]};
+    saveXlsx(wb, name + ".xlsx");
+  }
+}
+
+function vItems(){
+  if (!deptList().length) return noDeptState();
+  let items = itemsCur();
+  const all = items.length;
+  const q = norm(ui.q);
+  if (q) items = items.filter(i => [i.code,i.name,i.loc,i.unit].some(v => String(v||"").includes(q)));
+  if (ui.noLoc) items = items.filter(i => !norm(i.loc));
+  const locs = [...new Set([...Object.values(S.items).map(i => norm(i.loc)).filter(Boolean), ...roomsCur().map(r => /^\d+$/.test(r.num) ? `${r.type} ${r.num}` : r.num)])];
+  const canAdd = ui.cur !== "all";
+  const total = items.reduce((a,i)=>a+num(i.qty),0);
+  return `<div class="sec-head"><h2>أصناف العهدة <span class="hint">(${items.length}${items.length!==all?" من "+all:""} · ${fmt(total)} قطعة)</span></h2>
+    ${canAdd ? `<button class="btn primary" data-act="addItem">إضافة صنف</button>` : `<span class="hint">اختر قسمًا لإضافة أصناف</span>`}</div>
+  <div class="toolbar" style="margin-bottom:12px"><input type="search" id="q" placeholder="بحث برقم الصنف أو الاسم أو المكان" value="${esc(ui.q)}">
+    <label class="chip ${ui.noLoc?"warn":""}" style="cursor:pointer"><input type="checkbox" id="noLoc" ${ui.noLoc?"checked":""} style="margin:0 0 0 6px;vertical-align:middle">بدون موقع فقط</label></div>
+  <datalist id="locList">${locs.map(l => `<option value="${esc(l)}">`).join("")}</datalist>
+  ${items.length ? `<div class="tbl-wrap"><table><thead><tr><th>م</th><th>رقم الصنف</th><th>الصنف</th><th>الإجمالي</th><th>في القاعات</th><th>المتبقي</th><th>الوحدة</th><th>مكان التواجد</th>${ui.cur==="all"?"<th>القسم</th>":""}<th></th></tr></thead><tbody>
+  ${items.map((i,ix) => { const ck = "delItem:"+i.id; const f = (fl, cls, extra="") => `<input type="text" class="${cls}" id="f-items-${esc(i.id)}-${fl}" data-col="items" data-id="${esc(i.id)}" data-f="${fl}" value="${esc(i[fl])}" ${extra}>`;
+    const al = allocated(i), av = num(i.qty) - al;
+    const where = Object.entries(allocOf(i)).filter(([k,n]) => S.rooms[k] && num(n)).map(([k,n]) => `${S.rooms[k].num}: ${n}`).join("، ");
+    return `<tr><td class="hint">${ix+1}</td><td>${f("code","code",'inputmode="numeric"')}</td><td>${f("name","nm",'placeholder="اسم الصنف"')}</td>
+    <td><input type="number" min="0" class="qty" id="f-items-${esc(i.id)}-qty" data-col="items" data-id="${esc(i.id)}" data-f="qty" data-num="1" value="${esc(i.qty)}"></td>
+    <td class="num" title="${esc(where)}">${al ? fmt(al) : `<span class="hint">—</span>`}</td>
+    <td class="num"><span class="chip ${av<0?"bad":av===0?"":"ok"}">${fmt(av)}</span></td>
+    <td>${f("unit","unit")}</td><td>${f("loc","loc",'list="locList" placeholder="غير محدد"')}</td>${ui.cur==="all"?`<td class="hint">${esc(deptName(i.dept))}</td>`:""}
+    <td><button class="btn small danger ${ui.confirm===ck?"armed":""}" data-act="delItem" data-id="${esc(i.id)}" aria-label="حذف">${ui.confirm===ck?"تأكيد":"حذف"}</button></td></tr>`; }).join("")}
+  </tbody></table></div>` : `<div class="empty">${all ? "لا توجد نتائج مطابقة." : "لا توجد أصناف بعد. استورد ملف Excel أو أضف صنفًا."}</div>`}`;
+}
+
+function vIO(){
+  const ds = deptList(), imp = ui.imp, rs = ui.restore;
+  let impHtml = "";
+  if (imp){
+    const target = imp.target;
+    impHtml = `<div class="form" style="margin-top:14px">
+      <div class="row"><span class="chip ok">${imp.items.length} صنف</span>${imp.rooms.length?`<span class="chip ok">${imp.rooms.length} قاعة</span>`:""}<span class="hint">من الملف: ${esc(imp.file)} — ${esc(imp.sheets.join("، "))}</span></div>
+      <div class="row">
+        <label class="f">استيراد إلى<select id="impTarget">${`<option value="__new" ${target==="__new"?"selected":""}>قسم جديد</option>` + ds.map(d => `<option value="${esc(d.id)}" ${target===d.id?"selected":""}>${esc(d.name)}</option>`).join("")}</select></label>
+        ${target==="__new" ? `<label class="f">اسم القسم<input type="text" id="impName" value="${esc(imp.name)}"></label><label class="f">الكلية / الجهة<input type="text" id="impCollege" value="${esc(imp.college)}"></label>` : ""}
+      </div>
+      ${target!=="__new" ? `<div class="row"><label><input type="radio" name="impMode" value="merge" ${imp.mode!=="replace"?"checked":""}> دمج: تحديث الأصناف بنفس رقم الصنف وإضافة الجديد (يحافظ على التوزيع)</label>
+        <label><input type="radio" name="impMode" value="replace" ${imp.mode==="replace"?"checked":""}> استبدال كل أصناف القسم بمحتوى الملف</label></div>` : ""}
+      <div class="row"><label><input type="checkbox" id="impRooms" ${imp.makeRooms?"checked":""}> إنشاء القاعات من أرقام «مكان التواجد» وتوزيع الأصناف عليها</label></div>
+      <div class="tbl-wrap"><table><thead><tr><th>رقم الصنف</th><th>الصنف</th><th>العدد</th><th>الوحدة</th><th>المكان</th></tr></thead><tbody>
+        ${imp.items.slice(0,6).map(i => `<tr><td>${esc(i.code)}</td><td>${esc(i.name)}</td><td class="num">${esc(i.qty)}</td><td>${esc(i.unit)}</td><td>${esc(i.loc)}</td></tr>`).join("")}
+        ${imp.items.length>6?`<tr><td colspan="5" class="hint">و ${imp.items.length-6} صنف آخر…</td></tr>`:""}
+      </tbody></table></div>
+      <div class="row"><button class="btn primary" data-act="doImport" ${ui.busy?"disabled":""}>${ui.busy ? esc(ui.busy) : "استيراد وحفظ"}</button><button class="btn" data-act="cancelImport" ${ui.busy?"disabled":""}>إلغاء</button></div>
+    </div>`;
+  }
+  const n = o => Object.keys(o||{}).length;
+  return `<div class="grid2">
+    <section class="panel">
+      <div class="sec-head"><h2>استيراد ملف Excel</h2></div>
+      <p class="hint" style="margin-top:0">يقرأ أعمدة: رقم الصنف، الصنف، العدد / الرصيد، الوحدة، مكان التواجد. ويقرأ ورقة القاعات إن وُجدت (رقم القاعة، النوع، السعة، ملاحظات).</p>
+      <label class="drop" id="drop" for="fileIn"><input type="file" id="fileIn" accept=".xlsx,.xls,.csv"><b>اختر ملفًا</b> أو اسحبه هنا<br><span class="hint">xlsx · xls · csv</span></label>
+      ${impHtml}
+    </section>
+    <section class="panel">
+      <div class="sec-head"><h2>تصدير</h2></div>
+      <p class="hint" style="margin-top:0">ملف Excel منسّق ${ui.cur==="all"?"لكل الأقسام":"لـ" + esc(deptName(ui.cur))}، فيه خمس أوراق: ملخص، حصر الأصناف، القاعات والمعامل، مكاتب المدربين، وتوزيع الأصناف.</p>
+      ${canSave() ? `<div class="toolbar"><button class="btn primary" data-act="export">تنزيل Excel</button><button class="btn" data-act="template">تنزيل قالب فارغ</button></div>` : `<p class="hint">التنزيل غير متاح في هذا العرض. افتح اللوحة من رابطها في Claude.</p>`}
+    </section>
+    <section class="panel">
+      <div class="sec-head"><h2>نسخة احتياطية واسترداد</h2></div>
+      <p class="hint" style="margin-top:0">النسخة الاحتياطية ملف Excel كامل لكل الأقسام والقاعات والمكاتب والأصناف وتوزيعها. يُفتح في Excel مثل أي ملف، وترفعه هنا متى احتجت ترجع البيانات كما كانت.</p>
+      <div class="toolbar">
+        ${canSave() ? `<button class="btn primary" data-act="backup">تنزيل نسخة احتياطية</button>` : ""}
+        <label class="btn" for="restoreIn">استرداد من نسخة احتياطية<input type="file" id="restoreIn" accept=".xlsx,.json" hidden></label>
+      </div>
+      ${rs ? `<div class="form" style="margin-top:14px"><div class="row"><span class="chip warn">النسخة: ${n(rs.depts)} قسم · ${n(rs.rooms)} قاعة · ${n(rs.items)} صنف</span><span class="hint">${esc(rs.savedAt ? "بتاريخ " + new Date(rs.savedAt).toLocaleString("ar-SA-u-nu-latn") : "")}</span></div>
+        <p style="margin:0">الاسترداد يستبدل كل البيانات الحالية بمحتوى النسخة.</p>
+        <div class="row"><button class="btn danger armed" data-act="doRestore" ${ui.busy?"disabled":""}>${ui.busy ? esc(ui.busy) : "استبدال البيانات بالنسخة"}</button><button class="btn" data-act="cancelRestore" ${ui.busy?"disabled":""}>إلغاء</button></div></div>` : ""}
+    </section>
+    <section class="panel">
+      <div class="sec-head"><h2>أين تُحفظ البيانات؟</h2></div>
+      <p class="hint" style="margin:0">${ui.mode==="api" ? "كل تعديل يُحفظ مباشرة في قاعدة بيانات الخادم (SQLite)، ويظهر لكل من يفتح الموقع." : ui.mode==="db" ? "كل تعديل يُحفظ مباشرة في قاعدة بيانات هذه اللوحة، ويبقى عند إغلاقها وفتحها من أي جهاز." : "هذا العرض لا يصل إلى قاعدة البيانات، لذلك تُحفظ التعديلات في هذا المتصفح فقط. افتح اللوحة من رابطها في Claude للحفظ الدائم."}</p>
+    </section>
+  </div>`;
+}
+
+function vDepts(){
+  const ds = deptList();
+  return `<div class="sec-head"><h2>الأقسام <span class="hint">(${ds.length})</span></h2>
+    <div class="addrow"><input type="text" id="newDept" placeholder="اسم القسم" style="width:14rem"><button class="btn primary" data-act="addDept">إضافة قسم</button></div></div>
+  ${ds.length ? `<div class="tbl-wrap"><table><thead><tr><th>اسم القسم</th><th>الكلية / الجهة</th><th>الأصناف</th><th>القاعات</th><th></th></tr></thead><tbody>
+  ${ds.map(d => { const ck = "delDept:"+d.id; const ni = Object.values(S.items).filter(i => i.dept===d.id).length, nr = Object.values(S.rooms).filter(r => r.dept===d.id).length;
+    return `<tr><td><input type="text" class="nm" id="f-depts-${esc(d.id)}-name" data-col="depts" data-id="${esc(d.id)}" data-f="name" value="${esc(d.name)}"></td>
+    <td><input type="text" class="nm" id="f-depts-${esc(d.id)}-college" data-col="depts" data-id="${esc(d.id)}" data-f="college" value="${esc(d.college)}"></td>
+    <td class="num">${ni}</td><td class="num">${nr}</td>
+    <td style="white-space:nowrap"><button class="btn small" data-act="open" data-id="${esc(d.id)}">فتح</button> <button class="btn small danger ${ui.confirm===ck?"armed":""}" data-act="delDept" data-id="${esc(d.id)}">${ui.confirm===ck?"حذف القسم وكل بياناته؟":"حذف"}</button></td></tr>`; }).join("")}
+  </tbody></table></div>` : `<div class="empty">لا توجد أقسام. أضف قسمًا أو استورد ملفًا.</div>`}`;
+}
+
+/* ---------- import ---------- */
+function findCol(hdr, res){ for (const re of res){ const i = hdr.findIndex(h => re.test(h)); if (i >= 0) return i; } return -1; }
+function parseWorkbook(wb, fileName){
+  const out = { file:fileName, items:[], rooms:[], sheets:[], name:"", college:"", target:"__new", mode:"merge", makeRooms:true };
+  for (const sn of wb.SheetNames){
+    if (/^_|ملخص|مكاتب المدربين/.test(sn)) continue;
+    const rows = XLSX.utils.sheet_to_json(wb.Sheets[sn], {header:1, defval:"", raw:false});
+    let hi = rows.findIndex(r => r.some(c => /الصنف/.test(c)) && r.some(c => /العدد|الرصيد|الكمية|الإجمالي/.test(c)));
+    if (hi >= 0 && !/توزيع/.test(sn)){
+      for (const r of rows.slice(0, hi)) for (const c of r){ const t = norm(c); if (!t) continue; if (!out.name && /قسم/.test(t)){ const p = t.split(/\s[—–-]\s/); out.name = p[0]; if (p[1] && !out.college) out.college = p.slice(1).join(" - "); } }
+      const h = rows[hi].map(norm);
+      const c = { code: findCol(h,[/رقم الصنف/,/كود|الرمز/]), name: findCol(h,[/^الصنف$/,/اسم الصنف|وصف الصنف/,/الصنف/]), qty: findCol(h,[/العدد|الرصيد|الكمية|الإجمالي/]), unit: findCol(h,[/الوحدة/]), loc: findCol(h,[/مكان|الموقع|التواجد/]) };
+      if (c.code === c.name) c.code = -1;
+      let n = 0;
+      for (const r of rows.slice(hi+1)){
+        const name = c.name>=0 ? norm(r[c.name]) : ""; if (!name) continue;
+        out.items.push({ code: c.code>=0 ? norm(r[c.code]) : "", name, qty: c.qty>=0 ? num(r[c.qty]) : 0, unit: c.unit>=0 ? norm(r[c.unit]) : "", loc: c.loc>=0 ? norm(r[c.loc]) : "" }); n++;
+      }
+      out.sheets.push(`${sn} (${n} صنف)`); continue;
+    }
+    hi = rows.findIndex(r => r.some(c => /رقم القاعة|^القاعة$|رقم المعمل/.test(norm(c))));
+    if (hi >= 0 && !/توزيع/.test(sn)){
+      const h = rows[hi].map(norm);
+      const c = { num: findCol(h,[/رقم القاعة|رقم المعمل|^القاعة$/]), type: findCol(h,[/النوع/]), name: findCol(h,[/الاسم|الوصف/]), capacity: findCol(h,[/السعة/]), notes: findCol(h,[/ملاحظ/]) };
+      let n = 0;
+      for (const r of rows.slice(hi+1)){
+        const rn = norm(r[c.num]); if (!rn) continue;
+        out.rooms.push({ num: rn, type: ROOM_TYPES.includes(norm(r[c.type])) ? norm(r[c.type]) : "قاعة", name: c.name>=0 ? norm(r[c.name]) : "", capacity: c.capacity>=0 ? num(r[c.capacity]) : 0, notes: c.notes>=0 ? norm(r[c.notes]) : "" }); n++;
+      }
+      out.sheets.push(`${sn} (${n} قاعة)`);
+    }
+  }
+  if (!out.name) out.name = fileName.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim() || "قسم جديد";
+  const match = deptList().find(d => norm(d.name) === norm(out.name));
+  if (match) out.target = match.id;
+  return out;
+}
+async function handleFile(file){
+  if (!file) return;
+  if (!window.XLSX){ toast("تعذّر تحميل قارئ ملفات Excel. أعد تحميل الصفحة."); return; }
+  try {
+    const wb = XLSX.read(await file.arrayBuffer(), {type:"array"});
+    if (wb.Sheets["_backup"]){ const o = backupFromWorkbook(wb); if (o){ ui.restore = {depts:o.depts||{}, rooms:o.rooms||{}, items:o.items||{}, savedAt:o.savedAt}; ui.tab = "io"; schedule(); toast("هذا ملف نسخة احتياطية. راجع الاسترداد بالأسفل."); return; } }
+    const p = parseWorkbook(wb, file.name);
+    if (!p.items.length && !p.rooms.length){ toast("لم أجد أعمدة الأصناف أو القاعات في هذا الملف. تأكد من وجود عمود «الصنف» وعمود «العدد»."); return; }
+    ui.imp = p; ui.tab = "io"; schedule();
+  } catch { toast("تعذّر قراءة الملف. جرّب حفظه بصيغة xlsx."); }
+}
+async function doImport(){
+  const imp = ui.imp; if (!imp || ui.busy) return;
+  let deptId = imp.target;
+  const ops = [];
+  if (deptId === "__new"){
+    const name = norm($("#impName") ? $("#impName").value : imp.name) || "قسم جديد";
+    const college = norm($("#impCollege") ? $("#impCollege").value : imp.college);
+    deptId = rid("d"); ops.push(["depts", deptId, {name, college, createdAt: new Date().toISOString()}]);
+  } else if (imp.mode === "replace"){
+    Object.entries(S.items).forEach(([id,i]) => { if (i.dept === deptId) ops.push(["items", id, null]); });
+  }
+  const seen = {}, existingByCode = {};
+  Object.entries(S.items).forEach(([id,i]) => { if (i.dept === deptId && i.code) existingByCode[i.code] = id; });
+  const newItems = [];
+  for (const it of imp.items){
+    let id = it.code && imp.mode !== "replace" ? existingByCode[it.code] : null;
+    const keep = id && S.items[id] ? {alloc: allocOf(S.items[id])} : {};
+    if (!id) id = it.code ? deptId + "-i-" + safe(it.code) : rid(deptId + "-i-");
+    if (seen[id]) id = rid(deptId + "-i-"); seen[id] = 1;
+    const rec = {...keep, ...it, dept: deptId};
+    newItems.push([id, rec]);
+  }
+  const roomsAll = Object.entries(S.rooms).filter(([,r]) => r.dept === deptId).map(([id,r]) => ({id, ...r}));
+  const byNum = {}; roomsAll.forEach(r => byNum[String(r.num)] = r.id);
+  const newRooms = [];
+  for (const r of imp.rooms){ const id = byNum[r.num] || roomId(deptId, r.num); const base = S.rooms[id] || {}; byNum[r.num] = id; newRooms.push({id, ...base, ...r, dept: deptId}); }
+  if (imp.makeRooms){
+    const found = extractRooms(newItems.map(x => x[1]));
+    for (const [n, t] of Object.entries(found)) if (!byNum[n]) { const id = roomId(deptId, n); byNum[n] = id; newRooms.push({id, num:n, type:t, name:"", notes:"", capacity:0, dept:deptId}); }
+    const plan = autoAllocPlan(newItems.map(([id, rec]) => rec), [...roomsAll.filter(r => !newRooms.some(x => x.id === r.id)), ...newRooms]);
+    plan.forEach(([rec, alloc]) => { rec.alloc = alloc; });
+  }
+  newRooms.forEach(r => { const {id, ...d} = r; ops.push(["rooms", id, d]); });
+  newItems.forEach(([id, rec]) => { const del = ops.findIndex(o => o[0]==="items" && o[1]===id); if (del >= 0) ops.splice(del, 1); ops.push(["items", id, rec]); });
+  ui.busy = "جارٍ الحفظ 0 / " + ops.length; schedule();
+  await writeMany(ops, (d, t) => { ui.busy = `جارٍ الحفظ ${d} / ${t}`; schedule(); });
+  ui.busy = false; ui.imp = null; ui.cur = deptId; ui.tab = "overview"; saveUi(); schedule();
+  toast(`تم استيراد ${imp.items.length} صنف وحفظها.`);
+}
+
+/* ---------- Excel (styled) ---------- */
+const XB = {top:{style:"thin",color:{rgb:"C9D3CF"}},bottom:{style:"thin",color:{rgb:"C9D3CF"}},left:{style:"thin",color:{rgb:"C9D3CF"}},right:{style:"thin",color:{rgb:"C9D3CF"}}};
+const XF = "Arial";
+function styledSheet({title, subtitle, headers, rows, widths, numCols = [], totals = null}){
+  const aoa = [[title], [subtitle || ""], [], headers, ...rows];
+  if (totals) aoa.push(totals);
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  const nC = headers.length, hr = 3, last = aoa.length - 1;
+  ws["!merges"] = [{s:{r:0,c:0}, e:{r:0,c:nC-1}}, {s:{r:1,c:0}, e:{r:1,c:nC-1}}];
+  ws["!cols"] = widths.slice(0, nC).map(w => ({wch:w}));
+  ws["!rows"] = [{hpt:26},{hpt:18},{hpt:6},{hpt:24}];
+  const set = (r, c, st) => { const ref = XLSX.utils.encode_cell({r, c}); if (!ws[ref]) ws[ref] = {t:"s", v:""}; ws[ref].s = st; };
+  set(0, 0, {font:{name:XF, sz:15, bold:true, color:{rgb:"16231F"}}, alignment:{horizontal:"right", vertical:"center", readingOrder:2}});
+  set(1, 0, {font:{name:XF, sz:10, color:{rgb:"5B6964"}}, alignment:{horizontal:"right", readingOrder:2}});
+  for (let c = 0; c < nC; c++) set(hr, c, {font:{name:XF, sz:11, bold:true, color:{rgb:"FFFFFF"}}, fill:{patternType:"solid", fgColor:{rgb:"0F6B5A"}}, alignment:{horizontal:"center", vertical:"center", wrapText:true, readingOrder:2}, border:XB});
+  for (let r = hr + 1; r <= last; r++){
+    const isTot = totals && r === last, zebra = (r - hr) % 2 === 0;
+    for (let c = 0; c < nC; c++){
+      const isNum = numCols.includes(c);
+      set(r, c, {font:{name:XF, sz:11, bold:!!isTot}, fill:{patternType:"solid", fgColor:{rgb: isTot ? "D5EAE4" : zebra ? "F3F7F6" : "FFFFFF"}}, alignment:{horizontal: isNum ? "center" : "right", vertical:"center", wrapText:!isNum, readingOrder:2}, border:XB});
+    }
+  }
+  if (rows.length) ws["!autofilter"] = {ref: XLSX.utils.encode_range({s:{r:hr,c:0}, e:{r: hr + rows.length, c:nC-1}})};
+  return ws;
+}
+function buildWorkbook({all, withBackup}){
+  const items = itemsCur(), rooms = roomsCur(), halls = rooms.filter(r => !isOffice(r)), offices = rooms.filter(isOffice);
+  const d = S.depts[ui.cur];
+  const head = all ? "عهدة كل الأقسام" : [deptName(ui.cur), d && d.college].filter(Boolean).join(" — ");
+  let today = ""; try { today = new Date().toLocaleDateString("ar-SA-u-nu-latn-ca-gregory", {year:"numeric", month:"long", day:"numeric"}); } catch { today = new Date().toISOString().slice(0,10); }
+  const sub = `تاريخ التصدير: ${today}`;
+  const wb = XLSX.utils.book_new();
+  const counts = {}; halls.forEach(r => counts[r.id] = roomCounts(r.id));
+  const sumH = f => halls.reduce((a,r) => a + (f === "capacity" ? num(r.capacity) : counts[r.id][f]), 0);
+  const totalQty = items.reduce((a,i) => a + num(i.qty), 0), totalAl = items.reduce((a,i) => a + allocated(i), 0);
+  const sumRows = [["عدد الأقسام", all ? deptList().length : 1], ["أصناف العهدة", items.length], ["إجمالي القطع", totalQty], ["قطع موزّعة على القاعات والمكاتب", totalAl], ["قطع متبقية في الإجمالي", totalQty - totalAl],
+    ["القاعات والمعامل", halls.length], ["مكاتب المدربين", offices.length], ["السعة الاستيعابية", sumH("capacity")], ...CATS.map(([f,l]) => [l + " في القاعات", sumH(f)])];
+  XLSX.utils.book_append_sheet(wb, styledSheet({title: head, subtitle: sub, headers:["البند","العدد"], rows: sumRows, widths:[38,14], numCols:[1]}), "ملخص");
+  const ih = ["م","رقم الصنف","الصنف","العدد / الرصيد","في القاعات","المتبقي","الوحدة","مكان التواجد"].concat(all ? ["القسم"] : []);
+  const ir = items.map((i,ix) => [ix+1, i.code, i.name, num(i.qty), allocated(i), avail(i), i.unit, i.loc].concat(all ? [deptName(i.dept)] : []));
+  XLSX.utils.book_append_sheet(wb, styledSheet({title: head, subtitle: "عهدة القسم · " + sub, headers: ih, rows: ir, widths:[5,11,48,12,11,10,8,30,26], numCols:[0,1,3,4,5],
+    totals: ["","","الإجمالي", totalQty, totalAl, totalQty - totalAl, "", ""].concat(all ? [""] : [])}), "حصر الأصناف");
+  const rh = ["رقم القاعة","النوع","الاسم / الوصف", ...COUNT_FIELDS.map(c => c[1]), "عدد الأصناف","ملاحظات"].concat(all ? ["القسم"] : []);
+  const rr = halls.map(r => [r.num, r.type, r.name||"", num(r.capacity), ...CATS.map(([f]) => counts[r.id][f]), roomAllocs(r.id).length, r.notes||""].concat(all ? [deptName(r.dept)] : []));
+  XLSX.utils.book_append_sheet(wb, styledSheet({title: "القاعات والمعامل", subtitle: head, headers: rh, rows: rr, widths:[14,10,22,9,12,12,11,9,10,9,10,24,24], numCols:[3,4,5,6,7,8,9,10],
+    totals: ["الإجمالي","","", ...COUNT_FIELDS.map(([f]) => sumH(f)), "", ""].concat(all ? [""] : [])}), "القاعات والمعامل");
+  const oh = ["المكتب","اسم المدرب","الموقع / الدور","التحويلة","العهدة","عدد القطع","ملاحظات"].concat(all ? ["القسم"] : []);
+  const or = offices.map(r => { const al = roomAllocs(r.id); return [r.num, r.person || "", r.name || "", r.ext || "", al.map(x => `${x.it.name} (${x.n})`).join("\n"), al.reduce((a,x)=>a+x.n,0), r.notes || ""].concat(all ? [deptName(r.dept)] : []); });
+  XLSX.utils.book_append_sheet(wb, styledSheet({title: "مكاتب المدربين", subtitle: head, headers: oh, rows: or, widths:[14,24,16,10,52,9,22,24], numCols:[3,5]}), "مكاتب المدربين");
+  const dr = []; rooms.forEach(r => roomAllocs(r.id).forEach(({it, n}) => dr.push([r.num, r.type, isOffice(r) ? (r.person||"") : "", it.code, it.name, n, it.unit])));
+  XLSX.utils.book_append_sheet(wb, styledSheet({title: "توزيع الأصناف", subtitle: head, headers:["القاعة / المكتب","النوع","المدرب","رقم الصنف","الصنف","العدد","الوحدة"], rows: dr, widths:[16,12,20,11,48,8,8], numCols:[3,5]}), "توزيع الأصناف");
+  if (withBackup){
+    const json = JSON.stringify({app:"inventory-dashboard", version:3, savedAt:new Date().toISOString(), depts:S.depts, rooms:S.rooms, items:S.items});
+    const chunks = []; for (let i = 0; i < json.length; i += 30000) chunks.push([json.slice(i, i + 30000)]);
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["لا تعدّل هذه الورقة: تُستخدم لاسترداد البيانات"], ...chunks]), "_backup");
+  }
+  wb.Workbook = {Views:[{RTL:true}], Sheets: wb.SheetNames.map(n => ({name:n, Hidden: n === "_backup" ? 1 : 0}))};
+  return wb;
+}
+async function saveXlsx(wb, filename){
+  const data = XLSX.write(wb, {type:"array", bookType:"xlsx"});
+  try { await saveFile(filename, new Uint8Array(data), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); }
+  catch (e) { if (!e || e.code !== "declined") toast("تعذّر التنزيل. أعد المحاولة."); }
+}
+const stamp = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
+function exportNow(){ const all = ui.cur === "all"; saveXlsx(buildWorkbook({all, withBackup:false}), `عهدة ${all ? "كل الأقسام" : deptName(ui.cur)} ${stamp()}.xlsx`); }
+function backup(){ const keep = ui.cur; ui.cur = "all"; let wb; try { wb = buildWorkbook({all:true, withBackup:true}); } finally { ui.cur = keep; } saveXlsx(wb, `نسخة احتياطية - عهدة الأقسام ${stamp()}.xlsx`); }
+function exportTemplate(){
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, styledSheet({title:"اسم القسم — الكلية", subtitle:"عهدة القسم", headers:["م","رقم الصنف","الصنف","العدد / الرصيد","الوحدة","مكان التواجد"], rows:[], widths:[5,12,48,12,8,30], numCols:[0,1,3]}), "حصر الأصناف");
+  XLSX.utils.book_append_sheet(wb, styledSheet({title:"القاعات", subtitle:"", headers:["رقم القاعة","النوع","الاسم","السعة","ملاحظات"], rows:[], widths:[14,12,22,10,24], numCols:[3]}), "القاعات");
+  wb.Workbook = {Views:[{RTL:true}]};
+  saveXlsx(wb, "قالب عهدة القسم.xlsx");
+}
+function backupFromWorkbook(wb){
+  const ws = wb.Sheets["_backup"]; if (!ws) return null;
+  const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:"", raw:true});
+  const o = JSON.parse(rows.slice(1).map(r => String(r[0] || "")).join(""));
+  return (o && o.items && o.depts) ? o : null;
+}
+async function readRestore(file){
+  if (!file) return;
+  try {
+    let o = null;
+    if (/\.json$/i.test(file.name)) o = JSON.parse(await file.text());
+    else o = backupFromWorkbook(XLSX.read(await file.arrayBuffer(), {type:"array"}));
+    if (!o || typeof o !== "object" || !o.items || !o.depts) throw 0;
+    ui.restore = {depts:o.depts||{}, rooms:o.rooms||{}, items:o.items||{}, savedAt:o.savedAt}; ui.tab = "io"; schedule();
+  } catch { toast("هذا الملف ليس نسخة احتياطية من هذه اللوحة. النسخة الاحتياطية تُنزَّل من زر «تنزيل نسخة احتياطية»."); }
+}
+async function doRestore(){
+  const rs = ui.restore; if (!rs || ui.busy) return;
+  const ops = [];
+  for (const col of ["depts","rooms","items"]){
+    Object.keys(S[col]).forEach(id => { if (!rs[col][id]) ops.push([col, id, null]); });
+    Object.entries(rs[col]).forEach(([id, d]) => ops.push([col, id, d]));
+  }
+  ui.busy = "جارٍ الاسترداد…"; schedule();
+  await writeMany(ops, (d, t) => { ui.busy = `جارٍ الاسترداد ${d} / ${t}`; schedule(); });
+  ui.busy = false; ui.restore = null; ui.cur = "all"; ui.tab = "overview"; saveUi(); schedule();
+  toast("تم استرداد البيانات من النسخة الاحتياطية.");
+}
+
+/* ---------- allocation actions ---------- */
+async function setAlloc(itemId, rId, n){
+  const it = S.items[itemId]; if (!it) return;
+  const cur = num(allocOf(it)[rId]);
+  const maxN = cur + avail(it);
+  if (n > maxN){ toast(`المتبقي من «${it.name}» ${fmt(maxN - cur)} فقط.`); schedule(); return; }
+  const alloc = {...allocOf(it)};
+  if (n > 0) alloc[rId] = n; else delete alloc[rId];
+  await write("items", itemId, {...it, alloc});
+}
+
+/* ---------- events ---------- */
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.id === "deptSel"){ ui.cur = t.value; ui.confirm = null; saveUi(); schedule(); return; }
+  if (t.id === "fileIn"){ handleFile(t.files[0]); t.value = ""; return; }
+  if (t.id === "restoreIn"){ readRestore(t.files[0]); t.value = ""; return; }
+  if (t.id === "noLoc"){ ui.noLoc = t.checked; schedule(); return; }
+  if (t.id === "impTarget" && ui.imp){ ui.imp.target = t.value; schedule(); return; }
+  if (t.name === "impMode" && ui.imp){ ui.imp.mode = t.value; return; }
+  if (t.id === "impRooms" && ui.imp){ ui.imp.makeRooms = t.checked; return; }
+  if (t.id === "impName" && ui.imp){ ui.imp.name = t.value; return; }
+  if (t.id === "impCollege" && ui.imp){ ui.imp.college = t.value; return; }
+  if (t.dataset.allocItem){ setAlloc(t.dataset.allocItem, t.dataset.allocRoom, Math.max(0, Math.floor(num(t.value)))); return; }
+  const col = t.dataset.col, id = t.dataset.id, f = t.dataset.f;
+  if (col && id && f && S[col][id]){
+    const v = t.dataset.num ? num(t.value) : norm(t.value);
+    if (S[col][id][f] === v) return;
+    write(col, id, {...S[col][id], [f]: v});
+  }
+});
+function exactCode(roomIdV, q){ const r = S.rooms[roomIdV]; if (!r || !norm(q)) return null; const qq = norm(q); const same = Object.values(S.items).filter(it => it.dept === r.dept && avail(it) > 0 && String(it.code || "").startsWith(qq)); if (same.length !== 1 || String(same[0].code) !== qq) return null; const hit = Object.entries(S.items).find(([,it]) => it === same[0]); return hit ? hit[0] : null; }
+function choosePick(roomIdV, itemId){ const it = S.items[itemId]; if (!it) return; ui.pick = {room:roomIdV, q:String(it.code || it.name), sel:itemId, open:false}; schedule(); setTimeout(() => { const q = document.getElementById(`add-${roomIdV}-qty`); if (q){ q.focus(); q.select(); } }, 30); }
+document.addEventListener("input", e => {
+  if (e.target.id === "q"){ ui.q = e.target.value; schedule(); return; }
+  const pr = e.target.dataset && e.target.dataset.pick;
+  if (pr){ const q = e.target.value; const ex = exactCode(pr, q); ui.pick = {room:pr, q, sel:null, open:true}; if (ex) { choosePick(pr, ex); return; } schedule(); }
+});
+document.addEventListener("focusin", e => { const pr = e.target.dataset && e.target.dataset.pick; if (pr && !(ui.pick.room === pr && ui.pick.open)){ ui.pick = {room:pr, q: ui.pick.room === pr ? ui.pick.q : "", sel: ui.pick.room === pr ? ui.pick.sel : null, open: !(ui.pick.room === pr && ui.pick.sel)}; schedule(); } });
+document.addEventListener("mousedown", e => {
+  const row = e.target.closest && e.target.closest("[data-pick-item]");
+  if (row){ e.preventDefault(); choosePick(row.dataset.room, row.dataset.pickItem); return; }
+  if (ui.pick.open && !(e.target.closest && e.target.closest(".pk"))){ ui.pick.open = false; schedule(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.matches("td input, .capr input, .rname, .ri input, .fl input")) { e.target.blur(); }
+  if (e.key === "Enter" && e.target.id && /^newRoom(Num|Person)-/.test(e.target.id)) { e.preventDefault(); act("addRoom", e.target.id.split("-")[1]); }
+  if (e.key === "Enter" && e.target.id === "newDept") { e.preventDefault(); act("addDept"); }
+  if (e.key === "Enter" && e.target.id && /^add-.*-qty$/.test(e.target.id)) { e.preventDefault(); act("alloc", e.target.id.slice(4, -4)); }
+  const pr = e.target.dataset && e.target.dataset.pick;
+  if (pr && e.key === "Escape"){ ui.pick.open = false; schedule(); }
+  if (pr && e.key === "Enter"){ e.preventDefault(); const r = S.rooms[pr]; const pool = Object.entries(S.items).map(([k,it]) => ({id:k, ...it})).filter(it => it.dept === r.dept && avail(it) > 0); const m = pickMatches(pool, e.target.value); if (m.length) choosePick(pr, m[0].id); else toast("لا يوجد صنف بهذا الرقم له رصيد متبقٍ."); }
+  if (pr && e.key === "ArrowDown"){ const first = document.querySelector(`[data-pick-item][data-room="${pr}"]`); if (first){ e.preventDefault(); first.focus(); } }
+  const prow = e.target.dataset && e.target.dataset.pickItem;
+  if (prow && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); choosePick(e.target.dataset.room, prow); }
+  if (prow && (e.key === "ArrowDown" || e.key === "ArrowUp")){ e.preventDefault(); const sib = e.key === "ArrowDown" ? e.target.nextElementSibling : e.target.previousElementSibling; if (sib) sib.focus(); else if (e.key === "ArrowUp") { const pk = document.getElementById("pk-" + e.target.dataset.room); if (pk) pk.focus(); } }
+});
+document.addEventListener("click", e => {
+  const th = e.target.closest("[data-theme-set]");
+  if (th){ theme = th.dataset.themeSet; try { localStorage.setItem("inv-theme", theme); } catch {} applyTheme(theme); return; }
+  const tab = e.target.closest("#tabs button");
+  if (tab){ ui.tab = tab.dataset.tab; ui.confirm = null; saveUi(); schedule(); return; }
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  act(b.dataset.act, b.dataset.id, b.dataset.v);
+});
+const drop = e => e.target.closest && e.target.closest("#drop");
+document.addEventListener("dragover", e => { const d = drop(e); if (d){ e.preventDefault(); d.classList.add("over"); } });
+document.addEventListener("dragleave", e => { const d = drop(e); if (d) d.classList.remove("over"); });
+document.addEventListener("drop", e => { const d = drop(e); if (d){ e.preventDefault(); d.classList.remove("over"); handleFile(e.dataTransfer.files[0]); } });
+
+async function act(a, id, v){
+  const arm = key => { if (ui.confirm === key) { ui.confirm = null; return true; } ui.confirm = key; schedule(); setTimeout(() => { if (ui.confirm === key){ ui.confirm = null; schedule(); } }, 4000); return false; };
+  switch (a){
+    case "tab": ui.tab = v; saveUi(); schedule(); break;
+    case "noloc": ui.tab = "items"; ui.noLoc = true; saveUi(); schedule(); break;
+    case "open": ui.cur = id; ui.tab = "overview"; saveUi(); schedule(); break;
+    case "addDept": { const n = norm($("#newDept") && $("#newDept").value); if (!n){ toast("اكتب اسم القسم أولًا."); return; } const nid = rid("d"); if (await write("depts", nid, {name:n, college:"", createdAt:new Date().toISOString()})){ ui.cur = nid; saveUi(); toast("تمت إضافة القسم."); } break; }
+    case "delDept": { if (!arm("delDept:"+id)) return; const ops = [["depts",id,null]]; Object.entries(S.items).forEach(([k,i]) => i.dept===id && ops.push(["items",k,null])); Object.entries(S.rooms).forEach(([k,r]) => r.dept===id && ops.push(["rooms",k,null])); if (ui.cur===id) ui.cur="all"; await writeMany(ops); toast("تم حذف القسم."); break; }
+    case "addRoom": { const sec = SECTIONS.find(x => x.key === id) || SECTIONS[0];
+      const n = norm($("#newRoomNum-" + sec.key) && $("#newRoomNum-" + sec.key).value);
+      const person = norm($("#newRoomPerson-" + sec.key) && $("#newRoomPerson-" + sec.key).value);
+      const type = $("#newRoomType-" + sec.key) ? $("#newRoomType-" + sec.key).value : sec.types[0];
+      let name = n;
+      if (!name && sec.key === "offices"){ let k = Object.values(S.rooms).filter(r => r.dept===ui.cur && sectionOf(r.type)===sec).length + 1; while (Object.values(S.rooms).some(r => r.dept===ui.cur && r.num === "مكتب " + k)) k++; name = "مكتب " + k; }
+      if (!name){ toast("اكتب رقم القاعة أو اسم الغرفة أولًا."); return; }
+      if (Object.values(S.rooms).some(r => r.dept===ui.cur && String(r.num)===name)){ toast("هذا الاسم مسجّل مسبقًا."); return; }
+      await write("rooms", roomId(ui.cur, name), {num:name, type, person, name:"", notes:"", dept:ui.cur, capacity:0}); toast(`تمت إضافة ${name}.`); break; }
+    case "extractRooms": {
+      const items = Object.entries(S.items).filter(([,i]) => i.dept===ui.cur).map(([id,i]) => ({id, ...i}));
+      const found = extractRooms(items); const have = new Set(Object.values(S.rooms).filter(r => r.dept===ui.cur).map(r => String(r.num)));
+      const ops = Object.entries(found).filter(([n]) => !have.has(n)).map(([n,t]) => ["rooms", roomId(ui.cur, n), {num:n, type:t, name:"", notes:"", capacity:0, dept:ui.cur}]);
+      const rooms = [...Object.entries(S.rooms).filter(([,r]) => r.dept===ui.cur).map(([id,r]) => ({id, ...r})), ...ops.map(([,id,d]) => ({id, ...d}))];
+      const plan = autoAllocPlan(items, rooms);
+      plan.forEach(([it, alloc]) => { const {id: iid, ...rest} = it; ops.push(["items", iid, {...rest, alloc}]); });
+      if (!ops.length){ toast("لا يوجد شيء جديد للتوزيع حسب المواقع."); return; }
+      await writeMany(ops); toast(`أُنشئت ${ops.length - plan.length} قاعة ووُزّع ${plan.length} صنف.`); break; }
+    case "alloc": {
+      const qn = document.getElementById(`add-${id}-qty`);
+      let itemId = ui.pick.room === id ? ui.pick.sel : null;
+      if (!itemId && ui.pick.room === id){ const r = S.rooms[id]; const pool = Object.entries(S.items).map(([k,it]) => ({id:k, ...it})).filter(it => it.dept === r.dept && avail(it) > 0); const m = pickMatches(pool, ui.pick.q); if (m.length === 1 || (m[0] && String(m[0].code) === norm(ui.pick.q))) itemId = m[0].id; }
+      if (!itemId){ toast("اكتب رقم الصنف أو اختره من الجدول."); const pk = document.getElementById("pk-" + id); if (pk) pk.focus(); return; }
+      const it = S.items[itemId]; const n = Math.floor(num(qn && qn.value) || 1);
+      if (n <= 0){ toast("اكتب العدد."); return; }
+      const before = num(allocOf(it)[id]);
+      await setAlloc(itemId, id, before + n);
+      if (num(allocOf(S.items[itemId])[id]) !== before){ toast(`أُضيف ${fmt(n)} × ${it.name}`); ui.pick = {room:id, q:"", sel:null, open:false}; schedule(); setTimeout(() => { const pk = document.getElementById("pk-" + id); if (pk) pk.focus(); }, 60); }
+      break; }
+    case "unpick": ui.pick = {room:id, q:"", sel:null, open:true}; schedule(); setTimeout(() => { const pk = document.getElementById("pk-" + id); if (pk) pk.focus(); }, 30); break;
+    case "print": { const r = S.rooms[id]; if (!r) return; printForms(printPlaces().filter(p => p.key === "r:" + id)); break; }
+    case "printSel": { const v = $("#printSel") && $("#printSel").value; const all = printPlaces(); printForms(v === "__all" ? all : all.filter(p => p.key === v)); break; }
+    case "ret": { if (!arm("ret:" + v + ":" + id)) return; await setAlloc(id, v, 0); toast("تم الاسترداد إلى الإجمالي."); break; }
+    case "delRoom": { if (!arm("delRoom:"+id)) return;
+      const ops = Object.entries(S.items).filter(([,it]) => allocOf(it)[id] !== undefined).map(([k,it]) => { const alloc = {...allocOf(it)}; delete alloc[id]; return ["items", k, {...it, alloc}]; });
+      ops.push(["rooms", id, null]); await writeMany(ops); toast("حُذفت القاعة ورجعت أصنافها للإجمالي."); break; }
+    case "addItem": { const nid = rid(ui.cur + "-i-"); ui.q = ""; ui.noLoc = false; await write("items", nid, {code:"", name:"", qty:0, unit:"عدد", loc:"", dept:ui.cur}); setTimeout(() => { const el = document.getElementById(`f-items-${nid}-code`); if (el) { el.focus(); el.scrollIntoView({block:"center"}); } }, 120); break; }
+    case "delItem": if (!arm("delItem:"+id)) return; await write("items", id, null); break;
+    case "doImport": doImport(); break;
+    case "cancelImport": ui.imp = null; schedule(); break;
+    case "backup": backup(); break;
+    case "doRestore": doRestore(); break;
+    case "cancelRestore": ui.restore = null; schedule(); break;
+    case "export": exportNow(); break;
+    case "template": exportTemplate(); break;
+  }
+}
+
+render();
+initStore();
+})();
+</script>
+</body>
+</html>
